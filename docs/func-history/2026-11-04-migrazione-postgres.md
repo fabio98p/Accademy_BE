@@ -51,11 +51,11 @@ Alternative scartate:
 - [x] Creare `docker-compose.yml` in root con il servizio `postgres` (`postgres:17-alpine`, `POSTGRES_DB=AccademyDb`, `POSTGRES_USER=academy`, `POSTGRES_PASSWORD=academy`, porta `5432:5432`, volume `pgdata:/var/lib/postgresql/data`, healthcheck `pg_isready`)
 
 ### Fase 2: Provider e configurazione
-- [ ] `AcademyPersistance/AcademyEfPersistance.csproj`: rimuovere `Microsoft.EntityFrameworkCore.SqlServer` e `SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime`; aggiungere `Npgsql.EntityFrameworkCore.PostgreSQL` 5.0.10 e `Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime` 5.0.10. Lasciare invariato `Microsoft.EntityFrameworkCore.Tools` 5.0.10
+- [x] `AcademyPersistance/AcademyEfPersistance.csproj`: rimuovere `Microsoft.EntityFrameworkCore.SqlServer` e `SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime`; aggiungere `Npgsql.EntityFrameworkCore.PostgreSQL` 5.0.10 e `Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime` 5.0.10. Lasciare invariato `Microsoft.EntityFrameworkCore.Tools` 5.0.10
 - [ ] `CodeAcademyWeb/CodeAcademyWeb.csproj`: aggiungere `Microsoft.EntityFrameworkCore.Design` 5.0.10 se `dotnet ef` lo richiede sullo startup project (da verificare in fase di implementazione)
-- [ ] `CodeAcademyWeb/appsettings.Development.json`: aggiungere `ConnectionStrings:AcademyDb` = `Host=localhost;Port=5432;Database=AccademyDb;Username=academy;Password=academy`
-- [ ] `CodeAcademyWeb/Startup.cs`: `opt.UseNpgsql(Configuration.GetConnectionString("AcademyDb"), x => x.UseNodaTime())`, mantenendo `LogTo` e `EnableSensitiveDataLogging`
-- [ ] `AcademyPersistance/EFContext/AcademyContext.cs`: rimuovere `OnConfiguring`; in `OnModelCreating` aggiungere `HasPrecision(18, 2)` sui 3 campi decimal
+- [x] `CodeAcademyWeb/appsettings.Development.json`: aggiungere `ConnectionStrings:AcademyDb` = `Host=localhost;Port=5432;Database=AccademyDb;Username=academy;Password=academy`
+- [x] `CodeAcademyWeb/Startup.cs`: `opt.UseNpgsql(Configuration.GetConnectionString("AcademyDb"), x => x.UseNodaTime())`, mantenendo `LogTo` e `EnableSensitiveDataLogging`
+- [x] `AcademyPersistance/EFContext/AcademyContext.cs`: rimuovere `OnConfiguring`; in `OnModelCreating` aggiungere `HasPrecision(18, 2)` sui 3 campi decimal
 
 ### Fase 3: Migration
 - [ ] Creare `.config/dotnet-tools.json` con `dotnet-ef` 5.0.17

@@ -3,7 +3,7 @@
 - **Data**: 2026-11-04
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: Pianificata
+- **Stato**: In corso
 
 ## Obiettivo
 
@@ -48,7 +48,7 @@ Alternative scartate:
 ## Fasi implementative
 
 ### Fase 1: Postgres con Docker
-- [ ] Creare `docker-compose.yml` in root con il servizio `postgres` (`postgres:17-alpine`, `POSTGRES_DB=AccademyDb`, `POSTGRES_USER=academy`, `POSTGRES_PASSWORD=academy`, porta `5432:5432`, volume `pgdata:/var/lib/postgresql/data`, healthcheck `pg_isready`)
+- [x] Creare `docker-compose.yml` in root con il servizio `postgres` (`postgres:17-alpine`, `POSTGRES_DB=AccademyDb`, `POSTGRES_USER=academy`, `POSTGRES_PASSWORD=academy`, porta `5432:5432`, volume `pgdata:/var/lib/postgresql/data`, healthcheck `pg_isready`)
 
 ### Fase 2: Provider e configurazione
 - [ ] `AcademyPersistance/AcademyEfPersistance.csproj`: rimuovere `Microsoft.EntityFrameworkCore.SqlServer` e `SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime`; aggiungere `Npgsql.EntityFrameworkCore.PostgreSQL` 5.0.10 e `Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime` 5.0.10. Lasciare invariato `Microsoft.EntityFrameworkCore.Tools` 5.0.10

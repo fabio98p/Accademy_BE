@@ -64,7 +64,7 @@ Alternative scartate:
 - [x] Verificare che la migration generata usi i tipi di Postgres (`text`, `boolean`, `date`, `timestamp`, `numeric(18,2)`, identity `Npgsql:ValueGenerationStrategy`) e contenga l'indice unico `(StudentId, CourseEditionId)` su `Enrollments`
 
 ### Fase 4: README
-- [ ] Creare `README.md` (skill `procedure`): prerequisiti (Docker, SDK .NET 5 tramite AUR `dotnet-sdk-5.0-bin`), `docker compose up -d`, `dotnet tool restore`, `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`, `dotnet dev-certs https`, `dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb`, comando per creare una nuova migration. I link a `docs/functional` e `docs/technical` restano da aggiungere quando la documentazione verrà introdotta
+- [x] Creare `README.md` (skill `procedure`): prerequisiti (Docker, SDK .NET 5 tramite AUR `dotnet-sdk-5.0-bin`), `docker compose up -d`, `dotnet tool restore`, `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`, `dotnet dev-certs https`, `dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb`, comando per creare una nuova migration. I link a `docs/functional` e `docs/technical` restano da aggiungere quando la documentazione verrà introdotta
 
 ### Consigli registrati in pianificazione
 - `docs/consigli/2026-11-04-dotnet5-eol-e-vulnerabilita-npgsql.md`

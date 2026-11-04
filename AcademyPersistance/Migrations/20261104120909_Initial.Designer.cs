@@ -3,36 +3,37 @@ using System;
 using AcademyEFPersistance.EFContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NodaTime;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AcademyEfPersistance.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    [Migration("20211013105926_AddedEnrollmentIndexAndCourseCreationColumn")]
-    partial class AddedEnrollmentIndexAndCourseCreationColumn
+    [Migration("20261104120909_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.10")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("AcademyModel.Entities.Area", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -44,22 +45,22 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Capacity")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("HasProjector")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool?>("IsComputerized")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsVirtual")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -71,10 +72,10 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<long>("PersonId")
                         .HasColumnType("bigint");
@@ -96,35 +97,36 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<long>("AreaId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("BasePrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<LocalDate>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Duration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("GrantsCertification")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Level")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Syllabus")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -133,32 +135,33 @@ namespace AcademyEfPersistance.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("AcademyModel.Entities.CourseEdition", b =>
+            modelBuilder.Entity("AcademyModel.Entities.Edition", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<long>("CourseId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("FinalizationDate")
+                    b.Property<LocalDate>("FinalizationDate")
                         .HasColumnType("date");
 
                     b.Property<long>("InstructorId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("RealPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<LocalDate>("StartDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
@@ -175,19 +178,19 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<long>("CourseEditionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("EnrollmentDate")
+                    b.Property<LocalDate>("EnrollmentDate")
                         .HasColumnType("date");
 
                     b.Property<string>("StudentEvaluation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("StudentFeedback")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<long>("StudentId")
                         .HasColumnType("bigint");
@@ -196,7 +199,8 @@ namespace AcademyEfPersistance.Migrations
 
                     b.HasIndex("CourseEditionId");
 
-                    b.HasIndex("StudentId", "CourseEditionId");
+                    b.HasIndex("StudentId", "CourseEditionId")
+                        .IsUnique();
 
                     b.ToTable("Enrollments");
                 });
@@ -206,7 +210,7 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<long>("ClassroomId")
                         .HasColumnType("bigint");
@@ -214,14 +218,14 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("CourseEditionId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<LocalDateTime>("End")
+                        .HasColumnType("timestamp");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                    b.Property<LocalDateTime>("Start")
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -237,34 +241,34 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<LocalDate>("DateOfBirth")
                         .HasColumnType("date");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -278,16 +282,16 @@ namespace AcademyEfPersistance.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<long>("AreaId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -301,10 +305,11 @@ namespace AcademyEfPersistance.Migrations
                     b.HasBaseType("AcademyModel.Entities.Person");
 
                     b.Property<bool>("IsContractor")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<decimal>("PayRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasDiscriminator().HasValue("Instructor");
                 });
@@ -314,7 +319,7 @@ namespace AcademyEfPersistance.Migrations
                     b.HasBaseType("AcademyModel.Entities.Person");
 
                     b.Property<bool>("IsEmployee")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasDiscriminator().HasValue("Student");
                 });
@@ -349,7 +354,7 @@ namespace AcademyEfPersistance.Migrations
                     b.Navigation("Area");
                 });
 
-            modelBuilder.Entity("AcademyModel.Entities.CourseEdition", b =>
+            modelBuilder.Entity("AcademyModel.Entities.Edition", b =>
                 {
                     b.HasOne("AcademyModel.Entities.Course", "Course")
                         .WithMany("Editions")
@@ -370,7 +375,7 @@ namespace AcademyEfPersistance.Migrations
 
             modelBuilder.Entity("AcademyModel.Entities.Enrollment", b =>
                 {
-                    b.HasOne("AcademyModel.Entities.CourseEdition", "CourseEdition")
+                    b.HasOne("AcademyModel.Entities.Edition", "CourseEdition")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseEditionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -395,7 +400,7 @@ namespace AcademyEfPersistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AcademyModel.Entities.CourseEdition", "CourseEdition")
+                    b.HasOne("AcademyModel.Entities.Edition", "CourseEdition")
                         .WithMany()
                         .HasForeignKey("CourseEditionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -422,7 +427,7 @@ namespace AcademyEfPersistance.Migrations
                     b.Navigation("Editions");
                 });
 
-            modelBuilder.Entity("AcademyModel.Entities.CourseEdition", b =>
+            modelBuilder.Entity("AcademyModel.Entities.Edition", b =>
                 {
                     b.Navigation("Enrollments");
                 });

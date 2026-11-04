@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AcademyPersistance\AcademyEFPersistance.csproj" />
+    <ProjectReference Include="..\AcademyPersistance\AcademyEfPersistance.csproj" />
   </ItemGroup>
 
 </Project>

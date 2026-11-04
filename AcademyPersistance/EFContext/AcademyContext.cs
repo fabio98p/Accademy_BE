@@ -24,16 +24,6 @@ namespace AcademyEFPersistance.EFContext
 		public AcademyContext() {}
 		public AcademyContext(DbContextOptions<AcademyContext> options) : base(options) {}
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			optionsBuilder.UseSqlServer("server=localhost\\sqlexpress;database=AccademyDb;trusted_connection=true", x => x.UseNodaTime())
-			    .LogTo(Console.WriteLine,
-			    new[] {
-				 DbLoggerCategory.Database.Command.Name
-				    },
-				     LogLevel.Information)
-				     .EnableSensitiveDataLogging();
-		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 
@@ -53,6 +43,16 @@ namespace AcademyEFPersistance.EFContext
 				.IsRequired();
 			modelBuilder.Entity<Enrollment>()
 				.HasIndex(e => new { e.StudentId, e.CourseEditionId }).IsUnique();
+
+			modelBuilder.Entity<Course>()
+				.Property(c => c.BasePrice)
+				.HasPrecision(18, 2);
+			modelBuilder.Entity<Instructor>()
+				.Property(i => i.PayRate)
+				.HasPrecision(18, 2);
+			modelBuilder.Entity<Edition>()
+				.Property(e => e.RealPrice)
+				.HasPrecision(18, 2);
 		}
 	}
 }

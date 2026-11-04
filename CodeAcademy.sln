@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyModel", "AcademyModel\AcademyModel.csproj", "{A87E1770-FD78-4DB9-8257-8EFDA964DDA2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyEFPersistance", "AcademyPersistance\AcademyEFPersistance.csproj", "{CB845F2A-0C1F-4B28-AEB6-703DF8DAC0B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyEFPersistance", "AcademyPersistance\AcademyEfPersistance.csproj", "{CB845F2A-0C1F-4B28-AEB6-703DF8DAC0B5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeAcademyWeb", "CodeAcademyWeb\CodeAcademyWeb.csproj", "{D62FC846-6D44-42C5-9CA1-CC1C63E93CC0}"
 EndProject

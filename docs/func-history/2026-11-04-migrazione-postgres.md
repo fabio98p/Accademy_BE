@@ -3,7 +3,7 @@
 - **Data**: 2026-11-04
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: In corso
+- **Stato**: Completata
 
 ## Obiettivo
 
@@ -90,14 +90,19 @@ Alternative scartate:
 
 ## Criteri di accettazione
 
-- [ ] `docker compose up -d` avvia Postgres 17
-- [ ] La soluzione compila su Linux con l'SDK .NET 5
-- [ ] Nessun riferimento a SQL Server nel codice e nei csproj
-- [ ] La connection string viene letta da `appsettings.Development.json`
-- [ ] `dotnet ef database update` applica la migration `Initial` su Postgres
+- [x] `docker compose up -d` avvia Postgres 17
+- [x] La soluzione compila su Linux con l'SDK .NET 5
+- [x] Nessun riferimento a SQL Server nel codice e nei csproj
+- [x] La connection string viene letta da `appsettings.Development.json`
+- [x] `dotnet ef database update` applica la migration `Initial` su Postgres
 - [ ] L'app si avvia e legge e scrive sul database
-- [ ] `README.md` descrive setup e avvio in sviluppo
+- [x] `README.md` descrive setup e avvio in sviluppo
 
 ## Note di implementazione
 
-(Compilato da `/add-feature`.)
+- Prerequisiti di sistema non previsti: runtime ASP.NET Core 5 (AUR `aspnet-runtime-5.0-bin`) e OpenSSL 1.1 (AUR `openssl-1.1`, richiesto da .NET 5 su Linux); aggiunti al README e al consiglio su .NET 5.
+- Corretto il riferimento al progetto di persistenza in `CodeAcademy.sln` e `CodeAcademyWeb/CodeAcademyWeb.csproj` (`AcademyEFPersistance.csproj` → `AcademyEfPersistance.csproj`): su Linux il nome del file è case-sensitive.
+- `Microsoft.EntityFrameworkCore.Design` 5.0.10 aggiunto a `CodeAcademyWeb` perché richiesto da `dotnet ef`.
+- Migration generata: `20261104120909_Initial`.
+- Registrato il consiglio `docs/consigli/2026-11-04-credenziali-db-in-chiaro.md`.
+- Feature chiusa su richiesta dell'utente senza eseguire: avvio dell'app con lettura/scrittura, test dell'iscrizione duplicata, code review. Il criterio "L'app si avvia e legge e scrive sul database" resta non verificato.

@@ -52,16 +52,16 @@ Alternative scartate:
 
 ### Fase 2: Provider e configurazione
 - [x] `AcademyPersistance/AcademyEfPersistance.csproj`: rimuovere `Microsoft.EntityFrameworkCore.SqlServer` e `SimplerSoftware.EntityFrameworkCore.SqlServer.NodaTime`; aggiungere `Npgsql.EntityFrameworkCore.PostgreSQL` 5.0.10 e `Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime` 5.0.10. Lasciare invariato `Microsoft.EntityFrameworkCore.Tools` 5.0.10
-- [ ] `CodeAcademyWeb/CodeAcademyWeb.csproj`: aggiungere `Microsoft.EntityFrameworkCore.Design` 5.0.10 se `dotnet ef` lo richiede sullo startup project (da verificare in fase di implementazione)
+- [x] `CodeAcademyWeb/CodeAcademyWeb.csproj`: aggiungere `Microsoft.EntityFrameworkCore.Design` 5.0.10 se `dotnet ef` lo richiede sullo startup project (da verificare in fase di implementazione)
 - [x] `CodeAcademyWeb/appsettings.Development.json`: aggiungere `ConnectionStrings:AcademyDb` = `Host=localhost;Port=5432;Database=AccademyDb;Username=academy;Password=academy`
 - [x] `CodeAcademyWeb/Startup.cs`: `opt.UseNpgsql(Configuration.GetConnectionString("AcademyDb"), x => x.UseNodaTime())`, mantenendo `LogTo` e `EnableSensitiveDataLogging`
 - [x] `AcademyPersistance/EFContext/AcademyContext.cs`: rimuovere `OnConfiguring`; in `OnModelCreating` aggiungere `HasPrecision(18, 2)` sui 3 campi decimal
 
 ### Fase 3: Migration
-- [ ] Creare `.config/dotnet-tools.json` con `dotnet-ef` 5.0.17
-- [ ] Eliminare `AcademyPersistance/Migrations/*` (3 migration, Designer e snapshot)
-- [ ] `dotnet ef migrations add Initial -p AcademyPersistance -s CodeAcademyWeb`
-- [ ] Verificare che la migration generata usi i tipi di Postgres (`text`, `boolean`, `date`, `timestamp`, `numeric(18,2)`, identity `Npgsql:ValueGenerationStrategy`) e contenga l'indice unico `(StudentId, CourseEditionId)` su `Enrollments`
+- [x] Creare `.config/dotnet-tools.json` con `dotnet-ef` 5.0.17
+- [x] Eliminare `AcademyPersistance/Migrations/*` (3 migration, Designer e snapshot)
+- [x] `dotnet ef migrations add Initial -p AcademyPersistance -s CodeAcademyWeb`
+- [x] Verificare che la migration generata usi i tipi di Postgres (`text`, `boolean`, `date`, `timestamp`, `numeric(18,2)`, identity `Npgsql:ValueGenerationStrategy`) e contenga l'indice unico `(StudentId, CourseEditionId)` su `Enrollments`
 
 ### Fase 4: README
 - [ ] Creare `README.md` (skill `procedure`): prerequisiti (Docker, SDK .NET 5 tramite AUR `dotnet-sdk-5.0-bin`), `docker compose up -d`, `dotnet tool restore`, `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`, `dotnet dev-certs https`, `dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb`, comando per creare una nuova migration. I link a `docs/functional` e `docs/technical` restano da aggiungere quando la documentazione verrà introdotta

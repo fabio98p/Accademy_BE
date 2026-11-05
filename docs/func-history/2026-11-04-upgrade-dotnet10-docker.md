@@ -83,10 +83,10 @@ Alternative scartate:
 - [x] `dotnet build` della soluzione: correggere solo errori e warning bloccanti dovuti all'upgrade (nessun refactoring)
 
 ### Fase 3: Database e migration
-- [ ] Rinominare l'attuale `docker-compose.yml` in `docker-compose-postgres.yml` (solo Postgres): `postgres:18-alpine`, volume `pgdata:/var/lib/postgresql`
-- [ ] `docker compose down -v` e `docker compose -f docker-compose-postgres.yml up -d`
-- [ ] `dotnet ef migrations has-pending-model-changes -p AcademyPersistance -s CodeAcademyWeb`; se ci sono modifiche, `dotnet ef migrations add UpgradeEf10` e verificarne il contenuto
-- [ ] `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`
+- [x] Rinominare l'attuale `docker-compose.yml` in `docker-compose-postgres.yml` (solo Postgres): `postgres:18-alpine`, volume `pgdata:/var/lib/postgresql`
+- [x] `docker compose down -v` e `docker compose -f docker-compose-postgres.yml up -d`
+- [x] `dotnet ef migrations has-pending-model-changes -p AcademyPersistance -s CodeAcademyWeb`; se ci sono modifiche, `dotnet ef migrations add UpgradeEf10` e verificarne il contenuto
+- [x] `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`
 
 ### Fase 4: Front-end
 - [ ] Sostituire i file `dist` in `CodeAcademyWeb/wwwroot/lib/` (bootstrap, jquery, jquery-validation, jquery-validation-unobtrusive) con le versioni di destinazione, mantenendo percorsi e file `LICENSE`

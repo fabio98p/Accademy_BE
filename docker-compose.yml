@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     environment:
       POSTGRES_DB: AccademyDb
       POSTGRES_USER: academy
@@ -8,12 +8,24 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U academy -d AccademyDb"]
       interval: 5s
       timeout: 5s
       retries: 10
+
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__AcademyDb: Host=postgres;Port=5432;Database=AccademyDb;Username=academy;Password=academy;Gss Encryption Mode=Disable
+      AUTOMAPPER_LICENSE_KEY:
 
 volumes:
   pgdata:

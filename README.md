@@ -1,6 +1,8 @@
 # Accademy_BE
 
-Backend ASP.NET Core (.NET 5) dell'Accademy, con database PostgreSQL.
+Backend ASP.NET Core (.NET 10) dell'Accademy, con database PostgreSQL 18.
+
+Si usa un solo file compose alla volta: `docker-compose-postgres.yml` per lo sviluppo locale, `docker-compose.yml` per la build con Docker. Entrambi usano lo stesso database (volume `pgdata`) e la porta `5432`.
 
 ## Prerequisiti (Arch / CachyOS)
 
@@ -10,30 +12,18 @@ Installare Docker e Docker Compose, poi aggiungere l'utente al gruppo `docker` (
 sudo usermod -aG docker <tuo-utente>
 ```
 
-Installare l'SDK .NET 5 da AUR:
+Installare l'SDK .NET 10 e il runtime ASP.NET Core dal repository `extra`:
 
 ```bash
-paru -S dotnet-sdk-5.0-bin
+sudo pacman -S dotnet-sdk aspnet-runtime aspnet-targeting-pack
 ```
 
-Installare il runtime ASP.NET Core 5 da AUR:
-
-```bash
-paru -S aspnet-runtime-5.0-bin
-```
-
-Installare OpenSSL 1.1 da AUR (richiesto da .NET 5):
-
-```bash
-paru -S openssl-1.1
-```
-
-## Avvio in sviluppo
+## Sviluppo locale
 
 Avviare PostgreSQL:
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose-postgres.yml up -d
 ```
 
 Il database è raggiungibile su `localhost:5432`:
@@ -67,7 +57,7 @@ dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb
 
 L'applicazione risponde su `https://localhost:5001` e `http://localhost:5000`.
 
-## Nuova migration
+### Nuova migration
 
 Dopo aver modificato le entità, creare la migration sostituendo `<NomeMigration>`:
 
@@ -81,9 +71,43 @@ Applicarla al database:
 dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb
 ```
 
-## Arresto
+### Arresto
 
 Fermare PostgreSQL (i dati restano nel volume `pgdata`):
+
+```bash
+docker compose -f docker-compose-postgres.yml down
+```
+
+## Build
+
+Se è attivo il PostgreSQL dello sviluppo locale, fermarlo:
+
+```bash
+docker compose -f docker-compose-postgres.yml down
+```
+
+Buildare e avviare API e PostgreSQL:
+
+```bash
+docker compose up -d --build
+```
+
+Applicare le migration dall'host (solo la prima volta o dopo una nuova migration):
+
+```bash
+dotnet tool restore
+```
+
+```bash
+dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb
+```
+
+L'API risponde su `http://localhost:8080` (es. `http://localhost:8080/api/Area/areas`).
+
+### Arresto
+
+Fermare API e PostgreSQL (i dati restano nel volume `pgdata`):
 
 ```bash
 docker compose down

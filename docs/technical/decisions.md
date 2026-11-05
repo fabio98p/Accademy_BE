@@ -1,17 +1,17 @@
-# Decisioni
+# Decisions
 
-## 2026-11-05 — Test dei controller e documentazione tecnica
+## 2026-11-05 — Controller tests and technical documentation
 
-Piano: [2026-11-05-test-e-doc-tecnica-chiamate](../func-history/2026-11-05-test-e-doc-tecnica-chiamate.md)
+Plan: [2026-11-05-test-e-doc-tecnica-chiamate](../func-history/2026-11-05-test-e-doc-tecnica-chiamate.md)
 
-| Decisione | Motivazione | Alternative scartate |
-|-----------|-------------|----------------------|
-| xUnit v3 + NSubstitute, assert nativi di xUnit | FluentAssertions 8 ha licenza commerciale | FluentAssertions |
-| Unit test con `IMapper` reale (Profile del progetto) | Il contratto dipende da controller e mapping | `IMapper` mockato: test tautologici |
-| Test HTTP con `WebApplicationFactory<Startup>` e servizi mockati in DI | Coprono routing, binding, status reali, JSON, `Location`, validazione `[ApiController]` senza DB | Test e2e con DB |
-| Servizi e repository EF senza test | InMemory/SQLite non replicano Postgres e NodaTime | Test EF con InMemory/SQLite |
-| Un solo progetto `CodeAcademyWeb.Tests/`, cartelle `Controllers/` e `Http/`, trait `Category` | Configurazione e dipendenze in un solo posto; i livelli si lanciano separatamente | Due progetti di test |
-| I test verificano il contratto atteso: quelli sugli endpoint `BROKEN` falliscono | Rendono visibili i bug senza modificare il codice | Test allineati al comportamento attuale |
-| `StudentController` costruito con il costruttore attuale, senza iniettare `IEnrollmentsService` | Il bug del servizio mai assegnato resta visibile | Iniezione via reflection |
-| `global.json` con runner Microsoft.Testing.Platform | xUnit v3 4.x non supporta più VSTest con `dotnet test` sull'SDK .NET 10 | Downgrade a xUnit v3 3.x |
-| Riferimento esplicito a `Microsoft.EntityFrameworkCore.Relational` 10.0.14 nel progetto di test | Npgsql porta EF Core 10.0.4, ma `CodeAcademyWeb` è compilato sulla 10.0.14 | Allineare le versioni in `AcademyPersistance` (fuori ambito, registrato in `docs/consigli/`) |
+| Decision | Rationale | Rejected alternatives |
+|----------|-----------|-----------------------|
+| xUnit v3 + NSubstitute, native xUnit asserts | FluentAssertions 8 has a commercial license | FluentAssertions |
+| Unit tests with the real `IMapper` (project Profiles) | The contract depends on both controller and mapping | Mocked `IMapper`: tautological tests |
+| HTTP tests with `WebApplicationFactory<Startup>` and services mocked in DI | They cover routing, binding, real status codes, JSON, `Location`, `[ApiController]` validation without a DB | End-to-end tests with a DB |
+| No tests for EF services and repositories | InMemory/SQLite do not replicate Postgres and NodaTime | EF tests with InMemory/SQLite |
+| A single `CodeAcademyWeb.Tests/` project, `Controllers/` and `Http/` folders, `Category` trait | Configuration and dependencies in one place; levels can be run separately | Two test projects |
+| Tests check the expected contract: those on `BROKEN` endpoints fail | Bugs become visible without changing the code | Tests aligned to the current behaviour |
+| `StudentController` built with its current constructor, without injecting `IEnrollmentsService` | The never-assigned service bug stays visible | Injection via reflection |
+| `global.json` with the Microsoft.Testing.Platform runner | xUnit v3 4.x no longer supports VSTest with `dotnet test` on the .NET 10 SDK | Downgrade to xUnit v3 3.x |
+| Explicit reference to `Microsoft.EntityFrameworkCore.Relational` 10.0.14 in the test project | Npgsql brings EF Core 10.0.4, but `CodeAcademyWeb` is compiled against 10.0.14 | Aligning versions in `AcademyPersistance` (out of scope, recorded in `docs/suggestions/`) |

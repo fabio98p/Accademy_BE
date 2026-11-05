@@ -1,12 +1,12 @@
-# Documentazione tecnica
+# Technical documentation
 
-Backend REST dell'Accademy: gestisce aree, corsi, edizioni, docenti, studenti, iscrizioni e lezioni su PostgreSQL.
+REST backend of the Accademy: manages areas, courses, editions, instructors, students, enrollments and lessons on PostgreSQL.
 
-## Indice
+## Index
 
-- [Architettura](architecture.md): progetti, dipendenze, DI, flusso di una richiesta, gestione errori, livelli di test
-- [Decisioni](decisions.md): decisioni architetturali con link ai piani in `docs/func-history/`
-- Controller (`modules/`):
+- [Architecture](architecture.md): projects, dependencies, DI, request flow, error handling, test levels
+- [Decisions](decisions.md): architectural decisions with links to the plans in `docs/func-history/`
+- Controllers (`modules/`):
   - [AreaController](modules/area-controller.md)
   - [InstructorController](modules/instructor-controller.md)
   - [LessonController](modules/lesson-controller.md)
@@ -15,58 +15,58 @@ Backend REST dell'Accademy: gestisce aree, corsi, edizioni, docenti, studenti, i
   - [CourseController](modules/course-controller.md)
   - [StudentController](modules/student-controller.md)
 
-Il contratto delle API (route, body, status code) è nello Swagger: `/openapi/v1.json`, UI su `/swagger` (solo in ambiente Development). Questa documentazione non lo duplica.
+The API contract (routes, bodies, status codes) is in the Swagger spec: `/openapi/v1.json`, UI at `/swagger` (Development environment only). This documentation does not duplicate it.
 
 ## Stack
 
-| Ambito | Tecnologia |
-|--------|------------|
-| Runtime | .NET 10, ASP.NET Core (controller MVC) |
-| Persistenza | EF Core 10 + Npgsql, NodaTime per le date |
+| Area | Technology |
+|------|------------|
+| Runtime | .NET 10, ASP.NET Core (MVC controllers) |
+| Persistence | EF Core 10 + Npgsql, NodaTime for dates |
 | Database | PostgreSQL 18 |
-| Mapping | AutoMapper (Profile in `CodeAcademyWeb/Profiles`) |
+| Mapping | AutoMapper (Profiles in `CodeAcademyWeb/Profiles`) |
 | OpenAPI | `Microsoft.AspNetCore.OpenApi` + Swagger UI |
-| Test | xUnit v3, NSubstitute, `Microsoft.AspNetCore.Mvc.Testing` |
+| Tests | xUnit v3, NSubstitute, `Microsoft.AspNetCore.Mvc.Testing` |
 
-## Test
+## Tests
 
-Il progetto `CodeAcademyWeb.Tests/` (nella soluzione `CodeAcademy.sln`) ha due livelli, distinti dal trait `Category`:
+The `CodeAcademyWeb.Tests/` project (in the `CodeAcademy.sln` solution) has two levels, told apart by the `Category` trait:
 
-| Cartella | Categoria | Cosa verifica |
-|----------|-----------|---------------|
-| `Controllers/` | `Unit` | Metodo del controller chiamato direttamente: tipo di `IActionResult`, status, DTO mappato, `Location`, chiamate al servizio |
-| `Http/` | `Http` | API in-memory con `WebApplicationFactory`: routing, binding, status reale, header, JSON |
+| Folder | Category | What it checks |
+|--------|----------|----------------|
+| `Controllers/` | `Unit` | Controller method called directly: `IActionResult` type, status, mapped DTO, `Location`, service calls |
+| `Http/` | `Http` | In-memory API with `WebApplicationFactory`: routing, binding, real status, headers, JSON |
 
-Supporto in `Support/`:
-- `MapperFactory`: `IMapper` reale costruito dai Profile di `CodeAcademyWeb`.
-- `ApiFactory`: host in-memory con i servizi (`I*Service`) sostituiti da mock NSubstitute. Il database non viene mai usato.
+Support code in `Support/`:
+- `MapperFactory`: real `IMapper` built from the `CodeAcademyWeb` Profiles.
+- `ApiFactory`: in-memory host with the services (`I*Service`) replaced by NSubstitute mocks. The database is never used.
 
-I servizi EF e i repository non hanno test: servirebbero test d'integrazione su un PostgreSQL vero.
+The EF services and repositories have no tests: they would need integration tests on a real PostgreSQL.
 
-`global.json` in root imposta Microsoft.Testing.Platform come runner di `dotnet test`, come richiesto da xUnit v3 sull'SDK .NET 10.
+`global.json` in the root sets Microsoft.Testing.Platform as the `dotnet test` runner, as required by xUnit v3 on the .NET 10 SDK.
 
-### Esecuzione
+### Running
 
-I test non richiedono PostgreSQL avviato.
+The tests do not need PostgreSQL to be running.
 
-Tutti i test:
+All tests:
 
 ```bash
 dotnet test
 ```
 
-Solo gli unit test:
+Unit tests only:
 
 ```bash
 dotnet test --filter Category=Unit
 ```
 
-Solo i test HTTP:
+HTTP tests only:
 
 ```bash
 dotnet test --filter Category=Http
 ```
 
-### Test che falliscono di proposito
+### Tests that fail on purpose
 
-I test verificano il comportamento corretto atteso, non quello attuale. Gli endpoint segnati `BROKEN` nello Swagger e i DELETE per id inesistente hanno test rossi: resteranno rossi finché il relativo consiglio in `docs/consigli/` non verrà risolto. L'elenco è nei file dei controller in `modules/` e nel piano [2026-11-05-test-e-doc-tecnica-chiamate](../func-history/2026-11-05-test-e-doc-tecnica-chiamate.md).
+The tests check the expected correct behaviour, not the current one. The endpoints marked `BROKEN` in Swagger and the DELETEs by non-existent id have red tests: they stay red until the related suggestion in `docs/suggestions/` is resolved. The list is in the controller files in `modules/` and in the plan [2026-11-05-test-e-doc-tecnica-chiamate](../func-history/2026-11-05-test-e-doc-tecnica-chiamate.md).

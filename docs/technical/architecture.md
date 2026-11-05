@@ -1,15 +1,15 @@
-# Architettura
+# Architecture
 
-## Progetti
+## Projects
 
-| Progetto | Cartella | Contenuto |
-|----------|----------|-----------|
-| `AcademyModel` | `AcademyModel/` | Entità, interfacce di repository (`Repositories/I*Repository`) e servizi (`Services/I*Service`), eccezioni, estensioni NodaTime |
-| `AcademyEfPersistance` | `AcademyPersistance/` | `AcademyContext` (EF Core + Npgsql + NodaTime), migration, repository EF (`Repository/EF*Repository`), servizi (`Services/EF*Service`) |
-| `CodeAcademyWeb` | `CodeAcademyWeb/` | Host ASP.NET Core: `Startup.cs`, controller, DTO, Profile AutoMapper |
-| `CodeAcademyWeb.Tests` | `CodeAcademyWeb.Tests/` | Unit test dei controller e test HTTP in-memory |
+| Project | Folder | Content |
+|---------|--------|---------|
+| `AcademyModel` | `AcademyModel/` | Entities, repository (`Repositories/I*Repository`) and service (`Services/I*Service`) interfaces, exceptions, NodaTime extensions |
+| `AcademyEfPersistance` | `AcademyPersistance/` | `AcademyContext` (EF Core + Npgsql + NodaTime), migrations, EF repositories (`Repository/EF*Repository`), services (`Services/EF*Service`) |
+| `CodeAcademyWeb` | `CodeAcademyWeb/` | ASP.NET Core host: `Startup.cs`, controllers, DTOs, AutoMapper Profiles |
+| `CodeAcademyWeb.Tests` | `CodeAcademyWeb.Tests/` | Controller unit tests and in-memory HTTP tests |
 
-Dipendenze tra progetti:
+Project dependencies:
 
 ```mermaid
 graph LR
@@ -20,13 +20,13 @@ graph LR
 
 ## Dependency injection
 
-`CodeAcademyWeb/Startup.cs` (`ConfigureServices`) registra:
-- `AcademyContext` con la connection string `AcademyDb` (Npgsql + NodaTime, log dei comandi SQL su console).
-- Servizi e repository come `Scoped`: `IAreasService` → `EFAreasService`, `ICoursesService` → `EFCoursesService`, `IEditionsService` → `EFEditionsService`, `IEnrollmentsService` → `EFEnrollmentsService`, `ILessonsService` → `EFLessonsService`, `IPeopleService` → `EFPeopleService`; un `EF*Repository` per ogni `I*Repository`.
-- AutoMapper con `AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies())`: carica tutti i `Profile` degli assembly caricati.
-- CORS aperto (`AllowAnyOrigin`) e OpenAPI.
+`CodeAcademyWeb/Startup.cs` (`ConfigureServices`) registers:
+- `AcademyContext` with the `AcademyDb` connection string (Npgsql + NodaTime, SQL commands logged to the console).
+- Services and repositories as `Scoped`: `IAreasService` → `EFAreasService`, `ICoursesService` → `EFCoursesService`, `IEditionsService` → `EFEditionsService`, `IEnrollmentsService` → `EFEnrollmentsService`, `ILessonsService` → `EFLessonsService`, `IPeopleService` → `EFPeopleService`; one `EF*Repository` for each `I*Repository`.
+- AutoMapper with `AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies())`: loads every `Profile` in the loaded assemblies.
+- Open CORS (`AllowAnyOrigin`) and OpenAPI.
 
-## Flusso di una richiesta
+## Request flow
 
 ```mermaid
 sequenceDiagram
@@ -37,31 +37,31 @@ sequenceDiagram
     participant R as EF*Repository
     participant DB as PostgreSQL
     C->>Ctrl: HTTP + JSON (DTO)
-    Ctrl->>M: DTO → entità
-    Ctrl->>S: operazione
-    S->>R: query / modifica
+    Ctrl->>M: DTO → entity
+    Ctrl->>S: operation
+    S->>R: query / change
     R->>DB: SQL (EF Core)
-    S-->>Ctrl: entità
-    Ctrl->>M: entità → DTO
-    Ctrl-->>C: IActionResult (status + JSON camelCase)
+    S-->>Ctrl: entity
+    Ctrl->>M: entity → DTO
+    Ctrl-->>C: IActionResult (status + camelCase JSON)
 ```
 
-I controller non contengono logica di business: convertono con AutoMapper, chiamano il servizio e scelgono lo status. Le date (`LocalDate` NodaTime) diventano stringhe `yyyy-MM-dd` nei DTO tramite `AcademyModel/Extensions/LocalDateExtensions.cs` o `ToString("yyyy-MM-dd")` nei Profile.
+Controllers contain no business logic: they map with AutoMapper, call the service and pick the status. Dates (NodaTime `LocalDate`) become `yyyy-MM-dd` strings in the DTOs through `AcademyModel/Extensions/LocalDateExtensions.cs` or `ToString("yyyy-MM-dd")` in the Profiles.
 
-## Gestione errori
+## Error handling
 
-- I servizi segnalano un'entità inesistente con `EntityNotFoundException` (`AcademyModel/Exceptions/EntityNotFoundException.cs`), che espone `EntityName`.
-- I controller che la gestiscono rispondono con `ErrorObject` (`StatusCode`, `Message`): 400 se manca un'entità collegata (corso, docente, studente, edizione), 404 se manca l'entità principale.
-- Non c'è un middleware globale: le eccezioni non gestite (es. `ArgumentNullException` dei DELETE per id inesistente) diventano 500.
-- `[ApiController]` restituisce 400 `ProblemDetails` se il body non è valido.
+- Services report a missing entity with `EntityNotFoundException` (`AcademyModel/Exceptions/EntityNotFoundException.cs`), which exposes `EntityName`.
+- Controllers that handle it respond with an `ErrorObject` (`StatusCode`, `Message`): 400 when a related entity is missing (course, instructor, student, edition), 404 when the main entity is missing.
+- There is no global middleware: unhandled exceptions (e.g. the `ArgumentNullException` of DELETE by non-existent id) become 500.
+- `[ApiController]` returns 400 `ProblemDetails` when the body is invalid.
 
-Le eccezioni gestite da ogni endpoint sono nei file in [modules/](README.md#indice).
+The exceptions handled by each endpoint are listed in the files in [modules/](README.md#index).
 
-## Livelli di test
+## Test levels
 
-| Livello | Cosa è reale | Cosa è mock |
-|---------|--------------|-------------|
-| Unit (`Controllers/`) | Controller, `IMapper` (Profile reali) | Servizi |
-| HTTP (`Http/`) | Pipeline ASP.NET Core completa (routing, binding, `[ApiController]`, serializzazione JSON), `IMapper` | Servizi, registrati in DI da `ApiFactory` |
+| Level | Real | Mocked |
+|-------|------|--------|
+| Unit (`Controllers/`) | Controller, `IMapper` (real Profiles) | Services |
+| HTTP (`Http/`) | Full ASP.NET Core pipeline (routing, binding, `[ApiController]`, JSON serialization), `IMapper` | Services, registered in DI by `ApiFactory` |
 
-Servizi e repository EF sono esclusi: provider in-memory o SQLite non replicano Postgres e NodaTime. Vedi [decisions.md](decisions.md).
+EF services and repositories are excluded: in-memory or SQLite providers do not replicate Postgres and NodaTime. See [decisions.md](decisions.md).

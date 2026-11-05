@@ -33,6 +33,7 @@ namespace CodeAcademyWeb
 						   }, LogLevel.Information).EnableSensitiveDataLogging());
 
 			services.AddControllersWithViews();
+			services.AddOpenApi();
 
 			services.AddScoped<IAreasService, EFAreasService>();
 			services.AddScoped<ICoursesService, EFCoursesService>();
@@ -76,6 +77,11 @@ namespace CodeAcademyWeb
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
+			if (env.IsDevelopment())
+			{
+				app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "v1"));
+			}
+
 			app.UseRouting();
 
 			app.UseAuthorization();
@@ -86,6 +92,10 @@ namespace CodeAcademyWeb
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 				//endpoints.MapControllers();
+				if (env.IsDevelopment())
+				{
+					endpoints.MapOpenApi();
+				}
 			});
 		}
 	}

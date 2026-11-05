@@ -3,7 +3,7 @@
 - **Data**: 2026-11-05
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: Pianificata
+- **Stato**: In corso
 
 ## Obiettivo
 
@@ -15,7 +15,7 @@ Nessuno.
 
 ## Contesto
 
-- `CodeAcademyWeb`: 7 controller API con route attribute (`Area`, `Course`, `Edition`, `Enrollment`, `Instructor`, `Lesson`, `Student`), 21 endpoint attivi, nessuna specifica OpenAPI.
+- `CodeAcademyWeb`: 7 controller API con route attribute (`Area`, `Course`, `Edition`, `Enrollment`, `Instructor`, `Lesson`, `Student`), 26 endpoint attivi, nessuna specifica OpenAPI.
 - Parte front-end residua: `Controllers/HomeController.cs`, `Views/` (Home, Shared, `_ViewImports`, `_ViewStart`), `Models/ErrorViewModel.cs`, `wwwroot/` (Bootstrap, jQuery, jquery-validation, unobtrusive, `css/site.css`, `js/site.js`, `favicon.ico`). In `Startup.cs`: `AddControllersWithViews`, `UseStaticFiles`, `MapControllerRoute` con default `Home/Index`.
 - I controller ereditano da `Controller` (classe per le view) senza usare funzioni delle view.
 - Pacchetti verificati il 2026-11-05: `Microsoft.AspNetCore.OpenApi` 10.0.14 (25/10/2026, ~280M download, nessuna vulnerabilità nota) e `Swashbuckle.AspNetCore.SwaggerUI` 10.3.1 (19/10/2026, ~1,39 mld download; l'advisory GHSA-qrmm-w75w-3wpx riguarda solo le versioni < 6.3.0).
@@ -48,11 +48,11 @@ Alternative scartate:
 ## Fasi implementative
 
 ### Fase 1: Swagger
-- [ ] `CodeAcademyWeb.csproj`: aggiungere `Microsoft.AspNetCore.OpenApi` 10.0.14 e `Swashbuckle.AspNetCore.SwaggerUI` 10.3.1; `<GenerateDocumentationFile>true</GenerateDocumentationFile>` e `<NoWarn>$(NoWarn);1591</NoWarn>`
-- [ ] `Startup.cs`: `services.AddOpenApi()`. In `Configure`, solo se `env.IsDevelopment()`: `endpoints.MapOpenApi()` e `app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "v1"))`
-- [ ] In tutti i 7 controller, per ogni azione: commento XML (`summary`, `param`, `response`) in inglese e `[ProducesResponseType]` con i codici realmente restituiti e il tipo (DTO, `ErrorObject`, `string` per il 404 del PUT Edition)
-- [ ] Commenti XML anche sui DTO usati come body o risposta (`CodeAcademyWeb/DTOs/*`) e su `AcademyModel/Exceptions/ErrorObject.cs` se serve allo schema
-- [ ] Verificare che `/openapi/v1.json` contenga tutti i 21 endpoint con tag per controller
+- [x] `CodeAcademyWeb.csproj`: aggiungere `Microsoft.AspNetCore.OpenApi` 10.0.14 e `Swashbuckle.AspNetCore.SwaggerUI` 10.3.1; `<GenerateDocumentationFile>true</GenerateDocumentationFile>` e `<NoWarn>$(NoWarn);1591</NoWarn>`
+- [x] `Startup.cs`: `services.AddOpenApi()`. In `Configure`, solo se `env.IsDevelopment()`: `endpoints.MapOpenApi()` e `app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "v1"))`
+- [x] In tutti i 7 controller, per ogni azione: commento XML (`summary`, `param`, `response`) in inglese e `[ProducesResponseType]` con i codici realmente restituiti e il tipo (DTO, `ErrorObject`, `string` per il 404 del PUT Edition)
+- [x] Commenti XML anche sui DTO usati come body o risposta (`CodeAcademyWeb/DTOs/*`) e su `AcademyModel/Exceptions/ErrorObject.cs` se serve allo schema
+- [x] Verificare che `/openapi/v1.json` contenga tutti i 26 endpoint con tag per controller
 
 ### Fase 2: Rimozione front-end
 - [ ] Eliminare `Controllers/HomeController.cs`, `Models/ErrorViewModel.cs`, `Views/` e `wwwroot/`
@@ -84,7 +84,7 @@ Alternative scartate:
 - Nessun test unitario (assenti, non introdotti). Verifica manuale:
   - `dotnet build` della soluzione senza errori né warning nuovi
   - `dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb`: il browser non si apre; `curl http://localhost:5000/` risponde `backend running`
-  - `http://localhost:5000/swagger` mostra i 7 gruppi e i 21 endpoint con summary, parametri, body e risposte; `/openapi/v1.json` valido
+  - `http://localhost:5000/swagger` mostra i 7 gruppi e i 26 endpoint con summary, parametri, body e risposte; `/openapi/v1.json` valido
   - Una chiamata da Swagger UI (es. `GET /api/Area/areas`) funziona
   - Con `ASPNETCORE_ENVIRONMENT=Production`, `/swagger` e `/openapi/v1.json` rispondono 404
   - `docker compose up -d --build`: `http://localhost:8080/` e `http://localhost:8080/swagger` rispondono

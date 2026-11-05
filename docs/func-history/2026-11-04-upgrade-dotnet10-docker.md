@@ -98,7 +98,7 @@ Alternative scartate:
 - [x] Nuovo `docker-compose.yml`: servizio `postgres` identico a `docker-compose-postgres.yml` (porta 5432 esposta per le migration dall'host) + servizio `api` (`build: .`, porta `8080:8080`, `depends_on: postgres: condition: service_healthy`, env `ASPNETCORE_ENVIRONMENT=Development`, `ConnectionStrings__AcademyDb=Host=postgres;Port=5432;Database=AccademyDb;Username=academy;Password=academy`, `AUTOMAPPER_LICENSE_KEY=${AUTOMAPPER_LICENSE_KEY:-}`)
 
 ### Fase 6: README
-- [ ] Aggiornare `README.md` (skill `procedure`):
+- [x] Aggiornare `README.md` (skill `procedure`):
   - **Sviluppo locale**: prerequisiti .NET 10 da `extra` (rimozione dei pacchetti 5.0 e `openssl-1.1`), `docker compose -f docker-compose-postgres.yml up -d`, ricreazione del volume per PG 18, `dotnet tool restore`, migration, `dotnet dev-certs https`, `dotnet run`, nuova migration, arresto
   - **Build**: `docker compose up -d --build` (API su `http://localhost:8080`), migration dall'host, license key AutoMapper opzionale (`AUTOMAPPER_LICENSE_KEY`), arresto
   - Nota: usare un solo file compose alla volta

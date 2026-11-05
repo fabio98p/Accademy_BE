@@ -2,6 +2,7 @@
 using AcademyModel.Services;
 using AutoMapper;
 using CodeAcademyWeb.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -9,7 +10,7 @@ namespace CodeAcademyWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LessonController : Controller
+    public class LessonController : ControllerBase
     {
         private ILessonsService service;
         private IMapper mapper;
@@ -18,6 +19,10 @@ namespace CodeAcademyWeb.Controllers
             this.service = service;
             this.mapper = mapper;
         }
+        /// <summary>Returns the lessons of the edition with the given id.</summary>
+        /// <param name="id">Edition id.</param>
+        /// <response code="200">List of lessons.</response>
+        [ProducesResponseType(typeof(IEnumerable<LessonDTO>), StatusCodes.Status200OK)]
         [Route("lessonByEdition/{id}")]
         [HttpGet]
         public IActionResult FindLessonForEditionId(long id)

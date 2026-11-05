@@ -5,6 +5,7 @@ using AcademyModel.Repositories;
 using AcademyModel.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,8 @@ namespace CodeAcademyWeb
 			  DbLoggerCategory.Database.Command.Name
 						   }, LogLevel.Information).EnableSensitiveDataLogging());
 
-			services.AddControllersWithViews();
+			services.AddControllers();
+			services.AddOpenApi();
 
 			services.AddScoped<IAreasService, EFAreasService>();
 			services.AddScoped<ICoursesService, EFCoursesService>();
@@ -74,7 +76,11 @@ namespace CodeAcademyWeb
 			app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
+
+			if (env.IsDevelopment())
+			{
+				app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "v1"));
+			}
 
 			app.UseRouting();
 
@@ -82,10 +88,12 @@ namespace CodeAcademyWeb
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
-				//endpoints.MapControllers();
+				endpoints.MapControllers();
+				endpoints.MapGet("/", () => "backend running").ExcludeFromDescription();
+				if (env.IsDevelopment())
+				{
+					endpoints.MapOpenApi();
+				}
 			});
 		}
 	}

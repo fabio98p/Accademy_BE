@@ -57,6 +57,8 @@ dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb
 
 L'applicazione risponde su `https://localhost:5001` e `http://localhost:5000`.
 
+Swagger è disponibile su `https://localhost:5001/swagger`.
+
 ### Nuova migration
 
 Dopo aver modificato le entità, creare la migration sostituendo `<NomeMigration>`:
@@ -104,6 +106,8 @@ dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb
 ```
 
 L'API risponde su `http://localhost:8080` (es. `http://localhost:8080/api/Area/areas`).
+
+Swagger è disponibile su `http://localhost:8080/swagger`.
 
 ### Arresto
 

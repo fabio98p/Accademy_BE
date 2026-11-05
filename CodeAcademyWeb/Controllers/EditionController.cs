@@ -14,7 +14,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EditionController : Controller
+	public class EditionController : ControllerBase
 	{
 		private IEditionsService service;
         //private IDidactisService service;
@@ -25,6 +25,9 @@ namespace CodeAcademyWeb.Controllers
 			this.service = service;
 			this.mapper = mapper;
 		}
+		/// <summary>Returns all the course editions.</summary>
+		/// <response code="200">List of editions.</response>
+		[ProducesResponseType(typeof(IEnumerable<EditionDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		public IActionResult GetAll()
 		{
@@ -32,6 +35,12 @@ namespace CodeAcademyWeb.Controllers
 			var editionDTOs = mapper.Map<IEnumerable<EditionDTO>>(editions);
 			return Ok(editionDTOs);
 		}
+		/// <summary>Returns the details of the edition with the given id.</summary>
+		/// <param name="id">Edition id.</param>
+		/// <response code="200">The edition details.</response>
+		/// <response code="404">Edition not found.</response>
+		[ProducesResponseType(typeof(EditionDetailsDTO), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
 		[Route("{id}")]
 		[HttpGet]
 		public IActionResult FindById(long id)
@@ -44,6 +53,12 @@ namespace CodeAcademyWeb.Controllers
 			var editionDTO = mapper.Map<EditionDetailsDTO>(edition);
 			return Ok(editionDTO);
 		}
+		/// <summary>Creates a new course edition.</summary>
+		/// <param name="e">Edition to create.</param>
+		/// <response code="201">The created edition.</response>
+		/// <response code="400">Course or instructor not found.</response>
+		[ProducesResponseType(typeof(EditionDetailsDTO), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(ErrorObject), StatusCodes.Status400BadRequest)]
 		[HttpPost]
 		public IActionResult Create(EditionDetailsDTO e)
 		{
@@ -59,6 +74,15 @@ namespace CodeAcademyWeb.Controllers
 				return BadRequest(new ErrorObject(StatusCodes.Status400BadRequest, ex.Message));
 			}
 		}
+		/// <summary>BROKEN - Updates an existing course edition.</summary>
+		/// <remarks>If the edition does not exist the 404 body is a plain string instead of an ErrorObject.</remarks>
+		/// <param name="e">Edition with the updated data.</param>
+		/// <response code="200">The updated edition.</response>
+		/// <response code="400">Course or instructor not found.</response>
+		/// <response code="404">Edition not found (error message as plain string).</response>
+		[ProducesResponseType(typeof(EditionDetailsDTO), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(ErrorObject), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
 		[HttpPut]
 		public IActionResult Edit(EditionDetailsDTO e)
 		{
@@ -81,6 +105,12 @@ namespace CodeAcademyWeb.Controllers
 				}
 			}
 		}
+		/// <summary>Deletes the edition with the given id.</summary>
+		/// <param name="id">Edition id.</param>
+		/// <response code="204">Edition deleted.</response>
+		/// <response code="404">Edition not found.</response>
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(typeof(ErrorObject), StatusCodes.Status404NotFound)]
 		[Route("{id}")]
 		[HttpDelete]
 		public IActionResult Delete(long id)
@@ -95,6 +125,10 @@ namespace CodeAcademyWeb.Controllers
 				return NotFound(new ErrorObject(StatusCodes.Status404NotFound, ex.Message));
 			}
 		}
+		/// <summary>Returns the editions of the course with the given id.</summary>
+		/// <param name="id">Course id.</param>
+		/// <response code="200">List of editions.</response>
+		[ProducesResponseType(typeof(IEnumerable<EditionDetailsDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		[Route("course/{id}")]
 		public IActionResult GetEditionsByCourseId(long id)
@@ -103,6 +137,10 @@ namespace CodeAcademyWeb.Controllers
 			var editionDTOs = mapper.Map<IEnumerable<EditionDetailsDTO>>(editions);
 			return Ok(editionDTOs);
 		}
+        /// <summary>Returns the editions the student with the given id can enroll in.</summary>
+        /// <param name="id">Student id.</param>
+        /// <response code="200">List of available editions.</response>
+        [ProducesResponseType(typeof(IEnumerable<EditionDetailsDTO>), StatusCodes.Status200OK)]
         [HttpGet]
         [Route("studentAvailable/{id}")]
         public IActionResult GetAvailableEnrollmentByStudentId(long id)

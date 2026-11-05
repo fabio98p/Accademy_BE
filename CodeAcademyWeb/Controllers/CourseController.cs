@@ -13,7 +13,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class CourseController : Controller
+	public class CourseController : ControllerBase
 	{
 		//private IDidactisService service;
 		private ICoursesService service;
@@ -23,6 +23,9 @@ namespace CodeAcademyWeb.Controllers
 			this.service = service;
 			this.mapper = mapper;
 		}
+		/// <summary>Returns all the courses.</summary>
+		/// <response code="200">List of courses.</response>
+		[ProducesResponseType(typeof(IEnumerable<CourseDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		public IActionResult GetAllCourse()
 		{
@@ -30,6 +33,13 @@ namespace CodeAcademyWeb.Controllers
 			var courseDTOs = mapper.Map<IEnumerable<CourseDTO>>(course);
 			return Ok(courseDTOs);
 		}
+		/// <summary>BROKEN - Returns the course with the given id.</summary>
+		/// <remarks>If the course does not exist it returns 204 No Content instead of 404 Not Found.</remarks>
+		/// <param name="id">Course id.</param>
+		/// <response code="200">The course.</response>
+		/// <response code="204">Course not found.</response>
+		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[HttpGet]
 		[Route("{id}")]
 		public IActionResult GetCourseById(long id)
@@ -38,6 +48,11 @@ namespace CodeAcademyWeb.Controllers
 			var courseDTO = mapper.Map<CourseDTO>(course);
 			return Ok(courseDTO);
 		}
+		/// <summary>BROKEN - Creates a new course.</summary>
+		/// <remarks>If creationDate is not sent, the course is saved with creation date 0001-01-01. The Location header points to /api/courses/{id} instead of /api/Course/{id}.</remarks>
+		/// <param name="courseDTO">Course to create.</param>
+		/// <response code="201">The created course.</response>
+		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status201Created)]
 		[HttpPost]
 		public IActionResult CreateCourse(CourseDTO courseDTO)
 		{
@@ -46,6 +61,11 @@ namespace CodeAcademyWeb.Controllers
 			var resDTO = mapper.Map<CourseDTO>(course);
 			return Created($"/api/courses/{resDTO.Id}", resDTO);
 		}
+		/// <summary>BROKEN - Updates an existing course.</summary>
+		/// <remarks>It returns 201 Created instead of 200 OK, with a Location header pointing to /api/courses/{id} instead of /api/Course/{id}.</remarks>
+		/// <param name="courseDTO">Course with the updated data.</param>
+		/// <response code="201">The updated course.</response>
+		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status201Created)]
 		[HttpPut]
 		public IActionResult UpdateCourse(CourseDTO courseDTO)
 		{
@@ -54,6 +74,10 @@ namespace CodeAcademyWeb.Controllers
 			var resDTO = mapper.Map<CourseDTO>(course);
 			return Created($"/api/courses/{resDTO.Id}", resDTO);
 		}
+		/// <summary>Deletes the course passed in the body.</summary>
+		/// <param name="courseDTO">Course to delete.</param>
+		/// <response code="200">The deleted course.</response>
+		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status200OK)]
 		[HttpDelete]
 		public IActionResult RemoveCourse(CourseDTO courseDTO)
 		{
@@ -63,6 +87,10 @@ namespace CodeAcademyWeb.Controllers
 			return Ok(resDTO);
 		}
 
+		/// <summary>Deletes the course with the given id.</summary>
+		/// <param name="id">Course id.</param>
+		/// <response code="200">The deleted course.</response>
+		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status200OK)]
 		[HttpDelete]
 		[Route("{id}")]
 		public IActionResult RemoveCourse(long id)
@@ -72,6 +100,10 @@ namespace CodeAcademyWeb.Controllers
 			var resDTO = mapper.Map<CourseDTO>(course);
 			return Ok(resDTO);
 		}
+		/// <summary>Returns the last n created courses.</summary>
+		/// <param name="n">Number of courses to return.</param>
+		/// <response code="200">List of courses.</response>
+		[ProducesResponseType(typeof(IEnumerable<CourseDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		[Route("lastCourse/{n}")]
 		public IActionResult GetLastNCurses(int n)

@@ -14,7 +14,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EnrollmentController : Controller
+	public class EnrollmentController : ControllerBase
 	{
 		private IEnrollmentsService service;
 		private IMapper mapper;
@@ -23,6 +23,10 @@ namespace CodeAcademyWeb.Controllers
 			this.service = service;
 			this.mapper = mapper;
 		}
+		/// <summary>Returns the enrollments of the student with the given id.</summary>
+		/// <param name="id">Student id.</param>
+		/// <response code="200">List of enrollments.</response>
+		[ProducesResponseType(typeof(IEnumerable<EnrollmentDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		[Route("studentSubscribed/{id}")]
 		public IActionResult GetEnrollmentByStudentId(long id)
@@ -39,6 +43,13 @@ namespace CodeAcademyWeb.Controllers
         //    var enrollmentDTOs = mapper.Map<IEnumerable<EditionDetailsDTO>>(enrollments);
         //    return Ok(enrollmentDTOs);
         //}
+		/// <summary>BROKEN - Creates a new enrollment.</summary>
+		/// <remarks>The Location header points to /api/edition/{id} instead of the enrollment.</remarks>
+		/// <param name="e">Enrollment to create.</param>
+		/// <response code="201">The created enrollment.</response>
+		/// <response code="400">Student or edition not found.</response>
+		[ProducesResponseType(typeof(EnrollmentDTO), StatusCodes.Status201Created)]
+		[ProducesResponseType(typeof(ErrorObject), StatusCodes.Status400BadRequest)]
 		[HttpPost]
 		public IActionResult Create(EnrollmentDTO e)
 		{
@@ -54,6 +65,10 @@ namespace CodeAcademyWeb.Controllers
 				return BadRequest(new ErrorObject(StatusCodes.Status400BadRequest, ex.Message));
 			}
 		}
+		/// <summary>Deletes the enrollment with the given id.</summary>
+		/// <param name="id">Enrollment id.</param>
+		/// <response code="200">Enrollment deleted.</response>
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		[HttpDelete]
 		[Route("{id}")]
 		public IActionResult DeleteEnroll(long id)

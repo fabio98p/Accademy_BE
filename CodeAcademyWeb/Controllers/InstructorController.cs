@@ -12,7 +12,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class InstructorController : Controller
+	public class InstructorController : ControllerBase
 	{
 		private IPeopleService service;
 		private IMapper mapper;
@@ -21,6 +21,9 @@ namespace CodeAcademyWeb.Controllers
 			this.service = service;
 			this.mapper = mapper;
 		}
+		/// <summary>Returns all the instructors.</summary>
+		/// <response code="200">List of instructors.</response>
+		[ProducesResponseType(typeof(IEnumerable<InstructorDTO>), StatusCodes.Status200OK)]
 		[HttpGet]
 		public IActionResult GetAllInstructor()
 		{

@@ -3,7 +3,7 @@
 - **Data**: 2026-11-04
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: Pianificata
+- **Stato**: In corso
 
 ## Obiettivo
 
@@ -71,8 +71,8 @@ Alternative scartate:
 ## Fasi implementative
 
 ### Fase 1: SDK e target framework
-- [ ] Installare `dotnet-sdk` e `aspnet-runtime` da `extra` (lasciare installati i pacchetti 5.0 fino a fine verifica)
-- [ ] `AcademyModel.csproj`, `AcademyEfPersistance.csproj`, `CodeAcademyWeb.csproj`: `net5.0` → `net10.0`
+- [x] Installare `dotnet-sdk` e `aspnet-runtime` da `extra` (lasciare installati i pacchetti 5.0 fino a fine verifica)
+- [x] `AcademyModel.csproj`, `AcademyEfPersistance.csproj`, `CodeAcademyWeb.csproj`: `net5.0` → `net10.0`
 
 ### Fase 2: Pacchetti NuGet
 - [ ] `AcademyModel.csproj`: NodaTime 3.3.7

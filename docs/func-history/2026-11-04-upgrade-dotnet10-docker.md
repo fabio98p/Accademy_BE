@@ -75,12 +75,12 @@ Alternative scartate:
 - [x] `AcademyModel.csproj`, `AcademyEfPersistance.csproj`, `CodeAcademyWeb.csproj`: `net5.0` → `net10.0`
 
 ### Fase 2: Pacchetti NuGet
-- [ ] `AcademyModel.csproj`: NodaTime 3.3.7
-- [ ] `AcademyEfPersistance.csproj`: EF Core Tools 10.0.14, Npgsql EF e NodaTime 10.0.3
-- [ ] `CodeAcademyWeb.csproj`: EF Core Design 10.0.14; sostituire `AutoMapper.Extensions.Microsoft.DependencyInjection` con `AutoMapper` 16.2.0
-- [ ] `.config/dotnet-tools.json`: dotnet-ef 10.0.14
-- [ ] `CodeAcademyWeb/Startup.cs`: `services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());`
-- [ ] `dotnet build` della soluzione: correggere solo errori e warning bloccanti dovuti all'upgrade (nessun refactoring)
+- [x] `AcademyModel.csproj`: NodaTime 3.3.7
+- [x] `AcademyEfPersistance.csproj`: EF Core Tools 10.0.14, Npgsql EF e NodaTime 10.0.3
+- [x] `CodeAcademyWeb.csproj`: EF Core Design 10.0.14; sostituire `AutoMapper.Extensions.Microsoft.DependencyInjection` con `AutoMapper` 16.2.0
+- [x] `.config/dotnet-tools.json`: dotnet-ef 10.0.14
+- [x] `CodeAcademyWeb/Startup.cs`: `services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());`
+- [x] `dotnet build` della soluzione: correggere solo errori e warning bloccanti dovuti all'upgrade (nessun refactoring)
 
 ### Fase 3: Database e migration
 - [ ] Rinominare l'attuale `docker-compose.yml` in `docker-compose-postgres.yml` (solo Postgres): `postgres:18-alpine`, volume `pgdata:/var/lib/postgresql`

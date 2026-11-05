@@ -55,7 +55,7 @@ namespace CodeAcademyWeb
 			});
 
 
-			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //configurazione auto mapper per casting a DTO
+			services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies()); //configurazione auto mapper per casting a DTO
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

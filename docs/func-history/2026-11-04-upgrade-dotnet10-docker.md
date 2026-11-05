@@ -89,8 +89,8 @@ Alternative scartate:
 - [x] `dotnet ef database update -p AcademyPersistance -s CodeAcademyWeb`
 
 ### Fase 4: Front-end
-- [ ] Sostituire i file `dist` in `CodeAcademyWeb/wwwroot/lib/` (bootstrap, jquery, jquery-validation, jquery-validation-unobtrusive) con le versioni di destinazione, mantenendo percorsi e file `LICENSE`
-- [ ] `Views/Shared/_Layout.cshtml`: `data-toggle` → `data-bs-toggle`, `data-target` → `data-bs-target`
+- [x] Sostituire i file `dist` in `CodeAcademyWeb/wwwroot/lib/` (bootstrap, jquery, jquery-validation, jquery-validation-unobtrusive) con le versioni di destinazione, mantenendo percorsi e file `LICENSE`
+- [x] `Views/Shared/_Layout.cshtml`: `data-toggle` → `data-bs-toggle`, `data-target` → `data-bs-target`
 
 ### Fase 5: Docker
 - [ ] `.dockerignore` in root (`**/bin`, `**/obj`, `.git`, `.vs`, `docs`)

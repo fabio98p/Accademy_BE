@@ -93,9 +93,9 @@ Alternative scartate:
 - [x] `Views/Shared/_Layout.cshtml`: `data-toggle` → `data-bs-toggle`, `data-target` → `data-bs-target`
 
 ### Fase 5: Docker
-- [ ] `.dockerignore` in root (`**/bin`, `**/obj`, `.git`, `.vs`, `docs`)
-- [ ] `Dockerfile` in root multi-stage: `sdk:10.0` (restore dei csproj, poi `dotnet publish CodeAcademyWeb -c Release -o /app`) → `aspnet:10.0`, `EXPOSE 8080`, `ENTRYPOINT ["dotnet", "CodeAcademyWeb.dll"]`
-- [ ] Nuovo `docker-compose.yml`: servizio `postgres` identico a `docker-compose-postgres.yml` (porta 5432 esposta per le migration dall'host) + servizio `api` (`build: .`, porta `8080:8080`, `depends_on: postgres: condition: service_healthy`, env `ASPNETCORE_ENVIRONMENT=Development`, `ConnectionStrings__AcademyDb=Host=postgres;Port=5432;Database=AccademyDb;Username=academy;Password=academy`, `AUTOMAPPER_LICENSE_KEY=${AUTOMAPPER_LICENSE_KEY:-}`)
+- [x] `.dockerignore` in root (`**/bin`, `**/obj`, `.git`, `.vs`, `docs`)
+- [x] `Dockerfile` in root multi-stage: `sdk:10.0` (restore dei csproj, poi `dotnet publish CodeAcademyWeb -c Release -o /app`) → `aspnet:10.0`, `EXPOSE 8080`, `ENTRYPOINT ["dotnet", "CodeAcademyWeb.dll"]`
+- [x] Nuovo `docker-compose.yml`: servizio `postgres` identico a `docker-compose-postgres.yml` (porta 5432 esposta per le migration dall'host) + servizio `api` (`build: .`, porta `8080:8080`, `depends_on: postgres: condition: service_healthy`, env `ASPNETCORE_ENVIRONMENT=Development`, `ConnectionStrings__AcademyDb=Host=postgres;Port=5432;Database=AccademyDb;Username=academy;Password=academy`, `AUTOMAPPER_LICENSE_KEY=${AUTOMAPPER_LICENSE_KEY:-}`)
 
 ### Fase 6: README
 - [ ] Aggiornare `README.md` (skill `procedure`):

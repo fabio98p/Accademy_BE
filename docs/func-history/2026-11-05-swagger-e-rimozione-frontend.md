@@ -63,7 +63,7 @@ Alternative scartate:
 - [x] Controllo dipendenze superflue: nel csproj non devono restare riferimenti a view, Razor o contenuti statici, e non devono esistere `libman.json`, `package.json` o `bundleconfig.json`. I NuGet rimasti (AutoMapper, EF Core Design, OpenApi, SwaggerUI) sono tutti usati dal backend
 
 ### Fase 3: README
-- [ ] `README.md` (skill `procedure`): URL di Swagger, `http://localhost:5000/swagger` in Sviluppo locale e `http://localhost:8080/swagger` in Build
+- [x] `README.md` (skill `procedure`): URL di Swagger, `http://localhost:5000/swagger` in Sviluppo locale e `http://localhost:8080/swagger` in Build
 
 ### Consigli registrati in pianificazione
 - `2026-11-05-put-restituiscono-201.md`: `PUT` Course e Student restituiscono `201 Created` invece di `200 OK`

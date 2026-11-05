@@ -55,12 +55,12 @@ Alternative scartate:
 - [x] Verificare che `/openapi/v1.json` contenga tutti i 26 endpoint con tag per controller
 
 ### Fase 2: Rimozione front-end
-- [ ] Eliminare `Controllers/HomeController.cs`, `Models/ErrorViewModel.cs`, `Views/` e `wwwroot/`
-- [ ] `Startup.cs`: `AddControllersWithViews` → `AddControllers`; rimuovere `UseStaticFiles`; `MapControllerRoute` (e il commento `//endpoints.MapControllers();`) → `endpoints.MapControllers()`; aggiungere `endpoints.MapGet("/", () => "backend running").ExcludeFromDescription()`
-- [ ] I 7 controller: `: Controller` → `: ControllerBase`
-- [ ] `Properties/launchSettings.json`: `launchBrowser: false` in tutti e due i profili
-- [ ] Librerie front-end eliminate con `wwwroot/lib`: Bootstrap 5.3.8, jQuery 3.7.1, jquery-validation 1.22.1, jquery-validation-unobtrusive 4.0.0, più `css/site.css` e `js/site.js`. Swagger UI non le usa (i suoi asset sono già nel pacchetto NuGet)
-- [ ] Controllo dipendenze superflue: nel csproj non devono restare riferimenti a view, Razor o contenuti statici, e non devono esistere `libman.json`, `package.json` o `bundleconfig.json`. I NuGet rimasti (AutoMapper, EF Core Design, OpenApi, SwaggerUI) sono tutti usati dal backend
+- [x] Eliminare `Controllers/HomeController.cs`, `Models/ErrorViewModel.cs`, `Views/` e `wwwroot/`
+- [x] `Startup.cs`: `AddControllersWithViews` → `AddControllers`; rimuovere `UseStaticFiles`; `MapControllerRoute` (e il commento `//endpoints.MapControllers();`) → `endpoints.MapControllers()`; aggiungere `endpoints.MapGet("/", () => "backend running").ExcludeFromDescription()`
+- [x] I 7 controller: `: Controller` → `: ControllerBase`
+- [x] `Properties/launchSettings.json`: `launchBrowser: false` in tutti e due i profili
+- [x] Librerie front-end eliminate con `wwwroot/lib`: Bootstrap 5.3.8, jQuery 3.7.1, jquery-validation 1.22.1, jquery-validation-unobtrusive 4.0.0, più `css/site.css` e `js/site.js`. Swagger UI non le usa (i suoi asset sono già nel pacchetto NuGet)
+- [x] Controllo dipendenze superflue: nel csproj non devono restare riferimenti a view, Razor o contenuti statici, e non devono esistere `libman.json`, `package.json` o `bundleconfig.json`. I NuGet rimasti (AutoMapper, EF Core Design, OpenApi, SwaggerUI) sono tutti usati dal backend
 
 ### Fase 3: README
 - [ ] `README.md` (skill `procedure`): URL di Swagger, `http://localhost:5000/swagger` in Sviluppo locale e `http://localhost:8080/swagger` in Build

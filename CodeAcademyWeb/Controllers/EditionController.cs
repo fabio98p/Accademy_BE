@@ -14,7 +14,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EditionController : Controller
+	public class EditionController : ControllerBase
 	{
 		private IEditionsService service;
         //private IDidactisService service;

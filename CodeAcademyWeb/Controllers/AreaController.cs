@@ -9,7 +9,7 @@ namespace CodeAcademyWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AreaController : Controller
+    public class AreaController : ControllerBase
     {
         private IAreasService service;
         private IMapper mapper;

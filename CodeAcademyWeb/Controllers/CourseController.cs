@@ -13,7 +13,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class CourseController : Controller
+	public class CourseController : ControllerBase
 	{
 		//private IDidactisService service;
 		private ICoursesService service;

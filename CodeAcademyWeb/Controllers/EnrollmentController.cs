@@ -14,7 +14,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EnrollmentController : Controller
+	public class EnrollmentController : ControllerBase
 	{
 		private IEnrollmentsService service;
 		private IMapper mapper;

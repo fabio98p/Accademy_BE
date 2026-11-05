@@ -15,7 +15,7 @@ namespace CodeAcademyWeb.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class StudentController : Controller
+	public class StudentController : ControllerBase
 	{
 		private IPeopleService service;
 		private IEnrollmentsService enrollmentsService;

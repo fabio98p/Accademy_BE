@@ -57,7 +57,7 @@ dotnet run --project CodeAcademyWeb --launch-profile CodeAcademyWeb
 
 L'applicazione risponde su `https://localhost:5001` e `http://localhost:5000`.
 
-Swagger è disponibile su `http://localhost:5000/swagger`.
+Swagger è disponibile su `https://localhost:5001/swagger`.
 
 ### Nuova migration
 

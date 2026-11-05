@@ -33,10 +33,13 @@ namespace CodeAcademyWeb.Controllers
 			var courseDTOs = mapper.Map<IEnumerable<CourseDTO>>(course);
 			return Ok(courseDTOs);
 		}
-		/// <summary>Returns the course with the given id.</summary>
+		/// <summary>BROKEN - Returns the course with the given id.</summary>
+		/// <remarks>If the course does not exist it returns 204 No Content instead of 404 Not Found.</remarks>
 		/// <param name="id">Course id.</param>
-		/// <response code="200">The course (empty body if it does not exist).</response>
+		/// <response code="200">The course.</response>
+		/// <response code="204">Course not found.</response>
 		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[HttpGet]
 		[Route("{id}")]
 		public IActionResult GetCourseById(long id)
@@ -45,7 +48,8 @@ namespace CodeAcademyWeb.Controllers
 			var courseDTO = mapper.Map<CourseDTO>(course);
 			return Ok(courseDTO);
 		}
-		/// <summary>Creates a new course.</summary>
+		/// <summary>BROKEN - Creates a new course.</summary>
+		/// <remarks>If creationDate is not sent, the course is saved with creation date 0001-01-01. The Location header points to /api/courses/{id} instead of /api/Course/{id}.</remarks>
 		/// <param name="courseDTO">Course to create.</param>
 		/// <response code="201">The created course.</response>
 		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status201Created)]
@@ -57,7 +61,8 @@ namespace CodeAcademyWeb.Controllers
 			var resDTO = mapper.Map<CourseDTO>(course);
 			return Created($"/api/courses/{resDTO.Id}", resDTO);
 		}
-		/// <summary>Updates an existing course.</summary>
+		/// <summary>BROKEN - Updates an existing course.</summary>
+		/// <remarks>It returns 201 Created instead of 200 OK, with a Location header pointing to /api/courses/{id} instead of /api/Course/{id}.</remarks>
 		/// <param name="courseDTO">Course with the updated data.</param>
 		/// <response code="201">The updated course.</response>
 		[ProducesResponseType(typeof(CourseDTO), StatusCodes.Status201Created)]

@@ -3,7 +3,7 @@
 - **Data**: 2026-11-05
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: In corso
+- **Stato**: Completata
 
 ## Obiettivo
 
@@ -91,14 +91,20 @@ Alternative scartate:
 
 ## Criteri di accettazione
 
-- [ ] Tutti gli endpoint esistenti sono documentati in Swagger con codici di risposta corrispondenti al codice
-- [ ] Swagger disponibile solo in Development
-- [ ] La root risponde `backend running` e non compare nello Swagger
-- [ ] Nessuna view, libreria FE (Bootstrap, jQuery, jquery-validation, unobtrusive) o file statico nel progetto; nessuna dipendenza superflua
-- [ ] I controller ereditano da `ControllerBase`
-- [ ] Il README indica gli URL di Swagger
+- [x] Tutti gli endpoint esistenti sono documentati in Swagger con codici di risposta corrispondenti al codice
+- [x] Swagger disponibile solo in Development
+- [x] La root risponde `backend running` e non compare nello Swagger
+- [x] Nessuna view, libreria FE (Bootstrap, jQuery, jquery-validation, unobtrusive) o file statico nel progetto; nessuna dipendenza superflua
+- [x] I controller ereditano da `ControllerBase`
+- [x] Il README indica gli URL di Swagger
 - [x] Consigli sulle incoerenze registrati
 
 ## Note di implementazione
 
-(Compilato da `/add-feature`.)
+- Gli endpoint attivi sono 26 (16 percorsi), non 21: il numero è stato corretto nel piano.
+- `ErrorObject` non è stato commentato: `AcademyModel` non genera la documentazione XML e lo schema è comunque completo.
+- Dopo l'eliminazione di `wwwroot` serve una build pulita (`dotnet clean`): il manifest degli static web assets rimasto in `bin/obj` faceva fallire l'avvio.
+- In sviluppo `UseHttpsRedirection` reindirizza HTTP su HTTPS: nel README l'URL di Swagger locale è `https://localhost:5001/swagger` invece di `http://localhost:5000/swagger`.
+- Dopo la code-review, su richiesta dell'utente, gli endpoint che non danno il risultato atteso hanno il summary con prefisso `BROKEN -` e una description con il problema (9 endpoint: `POST`/`PUT`/`GET {id}` Course, `PUT` Edition, `POST` Enrollment, `PUT`/`GET {id}`/`DELETE {id}`/`POST {idStudent}/enrollments` Student).
+- Documentati i codici realmente restituiti: `GET` Course e Student by id restituiscono 204 (non 200 con body vuoto) se l'entità non esiste; `DELETE` Student restituisce sempre 204; l'iscrizione dello studente restituisce 500.
+- La chiamata di prova da Swagger UI non è stata verificata con il database attivo (PostgreSQL non avviato durante l'implementazione).

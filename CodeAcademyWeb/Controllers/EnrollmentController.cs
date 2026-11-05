@@ -43,7 +43,8 @@ namespace CodeAcademyWeb.Controllers
         //    var enrollmentDTOs = mapper.Map<IEnumerable<EditionDetailsDTO>>(enrollments);
         //    return Ok(enrollmentDTOs);
         //}
-		/// <summary>Creates a new enrollment.</summary>
+		/// <summary>BROKEN - Creates a new enrollment.</summary>
+		/// <remarks>The Location header points to /api/edition/{id} instead of the enrollment.</remarks>
 		/// <param name="e">Enrollment to create.</param>
 		/// <response code="201">The created enrollment.</response>
 		/// <response code="400">Student or edition not found.</response>

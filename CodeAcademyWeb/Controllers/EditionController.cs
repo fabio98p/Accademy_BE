@@ -74,7 +74,8 @@ namespace CodeAcademyWeb.Controllers
 				return BadRequest(new ErrorObject(StatusCodes.Status400BadRequest, ex.Message));
 			}
 		}
-		/// <summary>Updates an existing course edition.</summary>
+		/// <summary>BROKEN - Updates an existing course edition.</summary>
+		/// <remarks>If the edition does not exist the 404 body is a plain string instead of an ErrorObject.</remarks>
 		/// <param name="e">Edition with the updated data.</param>
 		/// <response code="200">The updated edition.</response>
 		/// <response code="400">Course or instructor not found.</response>

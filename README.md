@@ -2,6 +2,10 @@
 
 Backend ASP.NET Core (.NET 10) dell'Accademy, con database PostgreSQL 18.
 
+## Documentazione
+
+- [Documentazione tecnica](docs/technical/README.md): architettura, controller, test, decisioni
+
 Si usa un solo file compose alla volta: `docker-compose-postgres.yml` per lo sviluppo locale, `docker-compose.yml` per la build con Docker. Entrambi usano lo stesso database (volume `pgdata`) e la porta `5432`.
 
 ## Prerequisiti (Arch / CachyOS)

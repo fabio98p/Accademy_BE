@@ -3,7 +3,7 @@
 - **Data**: 2026-11-05
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: Pianificata
+- **Stato**: In corso
 
 ## Obiettivo
 
@@ -71,15 +71,15 @@ Alternative scartate:
 ## Fasi implementative
 
 ### Fase 0: Setup
-- [ ] `CodeAcademyWeb.Tests/CodeAcademyWeb.Tests.csproj` (net10.0): `xunit.v3` 4.0.2, `xunit.runner.visualstudio` 4.0.1, `Microsoft.NET.Test.Sdk` 18.11.0, `NSubstitute` 6.2.0, `coverlet.collector` 10.1.0, `Microsoft.AspNetCore.Mvc.Testing` 10.0.14; `ProjectReference` a `CodeAcademyWeb`. Ricontrollare in implementazione le advisory sulle versioni
-- [ ] Aggiungere il progetto a `CodeAcademy.sln` (`dotnet sln add`)
-- [ ] `Support/MapperFactory.cs`: `IMapper` reale da `MapperConfiguration` con i Profile dell'assembly `CodeAcademyWeb` e `NullLoggerFactory.Instance`
-- [ ] `Support/ApiFactory.cs`: `WebApplicationFactory<Startup>` che in `ConfigureTestServices` sostituisce `IAreasService`, `ICoursesService`, `IEditionsService`, `IEnrollmentsService`, `ILessonsService`, `IPeopleService` con mock NSubstitute esposti come proprietà. Nessuna connessione al DB (il `DbContext` resta registrato ma non viene risolto)
-- [ ] Verificare che `dotnet build` e `dotnet test` girino con zero test
-- [ ] `docs/technical/README.md` (skill `tech-docs`): indice, stack, struttura dei test, comandi `dotnet test` (tutti / `--filter Category=Unit` / `--filter Category=Http`), nota sui test che falliscono di proposito
-- [ ] `docs/technical/architecture.md`: progetti e dipendenze (`AcademyModel` ← `AcademyPersistance` ← `CodeAcademyWeb`), DI in `Startup.cs`, flusso di una richiesta (diagramma Mermaid), gestione errori (`EntityNotFoundException` → `ErrorObject`), livelli di test
-- [ ] `docs/technical/decisions.md`: decisioni di questo piano con link al file in `docs/func-history/`
-- [ ] `README.md` root: link a `docs/technical/README.md` (manca `docs/functional`, da segnalare come lacuna)
+- [x] `CodeAcademyWeb.Tests/CodeAcademyWeb.Tests.csproj` (net10.0): `xunit.v3` 4.0.2, `xunit.runner.visualstudio` 4.0.1, `Microsoft.NET.Test.Sdk` 18.11.0, `NSubstitute` 6.2.0, `coverlet.collector` 10.1.0, `Microsoft.AspNetCore.Mvc.Testing` 10.0.14; `ProjectReference` a `CodeAcademyWeb`. Ricontrollare in implementazione le advisory sulle versioni
+- [x] Aggiungere il progetto a `CodeAcademy.sln` (`dotnet sln add`)
+- [x] `Support/MapperFactory.cs`: `IMapper` reale da `MapperConfiguration` con i Profile dell'assembly `CodeAcademyWeb` e `NullLoggerFactory.Instance`
+- [x] `Support/ApiFactory.cs`: `WebApplicationFactory<Startup>` che in `ConfigureTestServices` sostituisce `IAreasService`, `ICoursesService`, `IEditionsService`, `IEnrollmentsService`, `ILessonsService`, `IPeopleService` con mock NSubstitute esposti come proprietà. Nessuna connessione al DB (il `DbContext` resta registrato ma non viene risolto)
+- [x] Verificare che `dotnet build` e `dotnet test` girino con zero test
+- [x] `docs/technical/README.md` (skill `tech-docs`): indice, stack, struttura dei test, comandi `dotnet test` (tutti / `--filter Category=Unit` / `--filter Category=Http`), nota sui test che falliscono di proposito
+- [x] `docs/technical/architecture.md`: progetti e dipendenze (`AcademyModel` ← `AcademyPersistance` ← `CodeAcademyWeb`), DI in `Startup.cs`, flusso di una richiesta (diagramma Mermaid), gestione errori (`EntityNotFoundException` → `ErrorObject`), livelli di test
+- [x] `docs/technical/decisions.md`: decisioni di questo piano con link al file in `docs/func-history/`
+- [x] `README.md` root: link a `docs/technical/README.md` (manca `docs/functional`, da segnalare come lacuna)
 
 ### Pattern di ogni fase controller (Fasi 1–7)
 - [ ] `CodeAcademyWeb.Tests/Controllers/<Nome>ControllerTests.cs`: per ogni endpoint, caso nominale, liste vuote dove ha senso, casi di errore (eccezioni del servizio, id inesistente) e, per gli endpoint `BROKEN`, il contratto atteso della tabella

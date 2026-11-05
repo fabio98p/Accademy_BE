@@ -3,7 +3,7 @@
 - **Data**: 2026-11-04
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: In corso
+- **Stato**: Completata
 
 ## Obiettivo
 
@@ -130,15 +130,24 @@ Alternative scartate:
 
 ## Criteri di accettazione
 
-- [ ] Tutti i progetti su `net10.0`; nessun pacchetto con vulnerabilità note (`dotnet list package --vulnerable`)
+- [x] Tutti i progetti su `net10.0`; nessun pacchetto con vulnerabilità note (`dotnet list package --vulnerable`)
 - [ ] La soluzione compila con l'SDK 10, senza SDK 5 né `openssl-1.1`
-- [ ] `dotnet ef database update` funziona su PostgreSQL 18
-- [ ] L'app si avvia, legge e scrive sul database
-- [ ] `docker compose -f docker-compose-postgres.yml up -d` avvia solo PostgreSQL 18 per lo sviluppo locale
-- [ ] `docker compose up -d --build` builda e avvia API e PostgreSQL, API raggiungibile su `http://localhost:8080`
+- [x] `dotnet ef database update` funziona su PostgreSQL 18
+- [x] L'app si avvia, legge e scrive sul database
+- [x] `docker compose -f docker-compose-postgres.yml up -d` avvia solo PostgreSQL 18 per lo sviluppo locale
+- [x] `docker compose up -d --build` builda e avvia API e PostgreSQL, API raggiungibile su `http://localhost:8080`
 - [ ] Librerie front-end aggiornate e layout funzionante
-- [ ] `README.md` con le sezioni Sviluppo locale e Build
+- [x] `README.md` con le sezioni Sviluppo locale e Build
 
 ## Note di implementazione
 
-(Compilato da `/add-feature`.)
+- **Prerequisito aggiuntivo**: oltre a `dotnet-sdk` e `aspnet-runtime` serve `aspnet-targeting-pack` (errore NETSDK1226 senza). Aggiunto al README.
+- **Migration**: `has-pending-model-changes` ha segnalato differenze; aggiunta `UpgradeEf10`, che cambia solo `Person.Discriminator` da `text` a `varchar(13)` (convenzione EF Core 8+).
+- **Connection string del container**: aggiunto `Gss Encryption Mode=Disable` solo in `docker-compose.yml`, per evitare il messaggio `libgssapi_krb5.so.2` (libreria Kerberos assente nell'immagine `aspnet:10.0`). Non in `appsettings`: sull'host la libreria è presente.
+- **AutoMapper**: nel compose `AUTOMAPPER_LICENSE_KEY` è passata solo se definita sull'host (shell o `.env`); con valore vuoto AutoMapper registrava un errore `crit`. AutoMapper 16 legge la variabile da solo, nessun codice aggiuntivo.
+- **`.env`**: aggiunto a `.gitignore` e `.dockerignore`.
+- **Dockerfile**: aggiunto `USER $APP_UID` (dalla code review), il container non gira più come root.
+- **README**: descrive un'installazione da zero (scelta dell'utente): tolti la rimozione dei pacchetti .NET 5 e `openssl-1.1`, la ricreazione del volume PG 17 e la sezione sulla license key AutoMapper.
+- **Front-end**: sostituiti solo i file già presenti in `wwwroot/lib` (nessuna variante `rtl`/`esm`).
+- **Verifiche**: lettura/scrittura via API, iscrizione duplicata (fallisce per l'indice unico) e `FindLessonInRange` (testata direttamente sul repository: l'endpoint è commentato). Restano da fare a mano: toggler della navbar nel browser e build senza SDK 5 e `openssl-1.1` installati (criteri non spuntati).
+- **Consigli registrati**: `2026-11-05-enrollmentsservice-mai-assegnato.md`, `2026-11-05-creationdate-corso-non-valorizzata.md`.

@@ -82,10 +82,10 @@ Alternative scartate:
 - [x] `README.md` root: link a `docs/technical/README.md` (manca `docs/functional`, da segnalare come lacuna)
 
 ### Pattern di ogni fase controller (Fasi 1–7)
-- [ ] `CodeAcademyWeb.Tests/Controllers/<Nome>ControllerTests.cs`: per ogni endpoint, caso nominale, liste vuote dove ha senso, casi di errore (eccezioni del servizio, id inesistente) e, per gli endpoint `BROKEN`, il contratto atteso della tabella
-- [ ] `CodeAcademyWeb.Tests/Http/<Nome>HttpTests.cs`: per ogni endpoint, route, status reale, `Location`, JSON camelCase, binding; stesso contratto atteso
-- [ ] `docs/technical/modules/<nome>-controller.md`: per ogni endpoint servizio chiamato, Profile e mapping usati (campi calcolati o rinominati), flusso, errori gestiti, problemi noti (link ai consigli), test che lo coprono ed esito atteso (verde / rosso voluto). Link allo Swagger per il contratto, senza duplicarlo
-- [ ] Eseguire `dotnet test` e annotare negli appunti del piano i test che falliscono, verificando che siano solo quelli attesi
+- [x] `CodeAcademyWeb.Tests/Controllers/<Nome>ControllerTests.cs`: per ogni endpoint, caso nominale, liste vuote dove ha senso, casi di errore (eccezioni del servizio, id inesistente) e, per gli endpoint `BROKEN`, il contratto atteso della tabella
+- [x] `CodeAcademyWeb.Tests/Http/<Nome>HttpTests.cs`: per ogni endpoint, route, status reale, `Location`, JSON camelCase, binding; stesso contratto atteso
+- [x] `docs/technical/modules/<nome>-controller.md`: per ogni endpoint servizio chiamato, Profile e mapping usati (campi calcolati o rinominati), flusso, errori gestiti, problemi noti (link ai consigli), test che lo coprono ed esito atteso (verde / rosso voluto). Link allo Swagger per il contratto, senza duplicarlo
+- [x] Eseguire `dotnet test` e annotare negli appunti del piano i test che falliscono, verificando che siano solo quelli attesi
 
 ### Fase 1: AreaController
 - [x] `GET /api/Area/areas`: lista mappata su `AreaDTO`, lista vuota
@@ -97,33 +97,33 @@ Alternative scartate:
 - [x] `GET /api/Lesson/lessonByEdition/{id}`: id passato al servizio, mapping `LessonDTO`, lista vuota
 
 ### Fase 4: EnrollmentController
-- [ ] `GET studentSubscribed/{id}`: mapping `EnrollmentDTO` (campi `CourseEdition*`, `CourseEditionStartDate`)
-- [ ] `POST`: 201 con `Location` `/api/Enrollment/{id}` (rosso), `EntityNotFoundException` → 400 `ErrorObject`
-- [ ] `DELETE {id}`: 200 senza body; id inesistente → 404 `ErrorObject` (rosso)
+- [x] `GET studentSubscribed/{id}`: mapping `EnrollmentDTO` (campi `CourseEdition*`, `CourseEditionStartDate`)
+- [x] `POST`: 201 con `Location` `/api/Enrollment/{id}` (rosso), `EntityNotFoundException` → 400 `ErrorObject`
+- [x] `DELETE {id}`: 200 senza body; id inesistente → 404 `ErrorObject` (rosso)
 
 ### Fase 5: EditionController
-- [ ] `GET`: mapping `EditionDTO`
-- [ ] `GET {id}`: `EditionDetailsDTO` (date `yyyy-MM-dd`, `InstructorFullName`); inesistente → 404 senza `ErrorObject` (come lo Swagger)
-- [ ] `POST`: 201 con `Location` `/api/edition/{id}`; `EntityNotFoundException` → 400 `ErrorObject`
-- [ ] `PUT`: 200; course/instructor inesistente → 400 `ErrorObject`; edizione inesistente → 404 `ErrorObject` (rosso)
-- [ ] `DELETE {id}`: 204; inesistente → 404 `ErrorObject`
-- [ ] `GET course/{id}` e `GET studentAvailable/{id}`: id passato al servizio, mapping `EditionDetailsDTO`
+- [x] `GET`: mapping `EditionDTO`
+- [x] `GET {id}`: `EditionDetailsDTO` (date `yyyy-MM-dd`, `InstructorFullName`); inesistente → 404 senza `ErrorObject` (come lo Swagger)
+- [x] `POST`: 201 con `Location` `/api/edition/{id}`; `EntityNotFoundException` → 400 `ErrorObject`
+- [x] `PUT`: 200; course/instructor inesistente → 400 `ErrorObject`; edizione inesistente → 404 `ErrorObject` (rosso)
+- [x] `DELETE {id}`: 204; inesistente → 404 `ErrorObject`
+- [x] `GET course/{id}` e `GET studentAvailable/{id}`: id passato al servizio, mapping `EditionDetailsDTO`
 
 ### Fase 6: CourseController
-- [ ] `GET`, `GET lastCourse/{n}`: mapping `CourseDTO` (`CreationDate`, `AreaName`), `n` passato al servizio
-- [ ] `GET {id}`: nominale; inesistente → 404 `ErrorObject` (rosso)
-- [ ] `POST`: 201, `Location` `/api/Course/{id}` (rosso), `CreationDate` odierna con o senza valore dal client (rosso)
-- [ ] `PUT`: 200 con DTO (rosso)
-- [ ] `DELETE` con body: 200 con DTO, `DeleteCourse(Course)` chiamato
-- [ ] `DELETE {id}`: 200 con DTO; inesistente → 404 `ErrorObject` (rosso)
+- [x] `GET`, `GET lastCourse/{n}`: mapping `CourseDTO` (`CreationDate`, `AreaName`), `n` passato al servizio
+- [x] `GET {id}`: nominale; inesistente → 404 `ErrorObject` (rosso)
+- [x] `POST`: 201, `Location` `/api/Course/{id}` (rosso), `CreationDate` odierna con o senza valore dal client (rosso)
+- [x] `PUT`: 200 con DTO (rosso)
+- [x] `DELETE` con body: 200 con DTO, `DeleteCourse(Course)` chiamato
+- [x] `DELETE {id}`: 200 con DTO; inesistente → 404 `ErrorObject` (rosso)
 
 ### Fase 7: StudentController
-- [ ] `GET`: mapping `StudentDTO` (`Surname`↔`Lastname`, `DateOfBirth`)
-- [ ] `POST`: 201, `Location` `/api/student/{id}`
-- [ ] `PUT`: 200 con DTO (rosso)
-- [ ] `GET {id}`: nominale; inesistente → 404 `ErrorObject` (rosso)
-- [ ] `POST {idStudent}/enrollments`: id URL ≠ body → 400 `ErrorObject`; valido → 201 con `EnrollmentDTO` e `Location` (rosso, `NullReferenceException` / 500)
-- [ ] `DELETE {id}`: 200 con `StudentDTO` letto prima della cancellazione (rosso); inesistente → 404 `ErrorObject` (rosso)
+- [x] `GET`: mapping `StudentDTO` (`Surname`↔`Lastname`, `DateOfBirth`)
+- [x] `POST`: 201, `Location` `/api/student/{id}`
+- [x] `PUT`: 200 con DTO (rosso)
+- [x] `GET {id}`: nominale; inesistente → 404 `ErrorObject` (rosso)
+- [x] `POST {idStudent}/enrollments`: id URL ≠ body → 400 `ErrorObject`; valido → 201 con `EnrollmentDTO` e `Location` (rosso, `NullReferenceException` / 500)
+- [x] `DELETE {id}`: 200 con `StudentDTO` letto prima della cancellazione (rosso); inesistente → 404 `ErrorObject` (rosso)
 
 ### Consigli registrati in pianificazione
 - `2026-11-05-filtri-ricerca-edizioni-senza-test.md`: `EFEditionRepository.Search` non ha unit test perché i filtri dipendono da `DbContext` e dalla data di sistema. Si testerà quando verrà creato un endpoint di ricerca
@@ -163,4 +163,18 @@ Alternative scartate:
 
 ## Note di implementazione
 
-(Compilato da `/add-feature`.)
+Deviations:
+- `global.json` in root with `test.runner` = `Microsoft.Testing.Platform`: xUnit v3 4.x no longer supports VSTest with `dotnet test` on the .NET 10 SDK. `--filter Category=...` still works.
+- Explicit `Microsoft.EntityFrameworkCore.Relational` 10.0.14 in the test project: Npgsql brings EF Core 10.0.4 while `CodeAcademyWeb` is compiled against 10.0.14 (`FileNotFoundException` in `WebApplicationFactory`). Root cause in `docs/suggestions/2026-11-05-versioni-ef-core-disallineate.md`.
+- `docs/consigli/` renamed to `docs/suggestions/`; technical docs and root README written in English (new global rules).
+- `Support/TestData.cs` added: sample entities shared by unit and HTTP tests.
+- Extra case `LessonHttpTests.FindLessonForEditionId_NonNumericId_Returns400` (binding check).
+- In HTTP tests TestServer rethrows unhandled exceptions to the client instead of returning 500: the reds on DELETE by non-existent id and on student enrollment fail with the exception.
+
+Test run: 111 tests (55 Unit, 56 Http), 83 green, 28 red. The red tests are exactly the ones marked "(rosso)", 14 per level:
+- Course: `GetCourseById_NonExistentId`, `CreateCourse_ValidCourse_LocationPointsToCourse`, `CreateCourse_WithoutCreationDate`, `CreateCourse_WithClientCreationDate`, `UpdateCourse_ValidCourse`, `RemoveCourse_NonExistentId`
+- Edition: `Edit_EditionNotFound`
+- Enrollment: `Create_ValidEnrollment_LocationPointsToEnrollment`, `DeleteEnroll_NonExistentId`
+- Student: `UpdateStudent_ValidStudent`, `GetStudentById_NonExistentId`, `EnrollStudent_ValidData`, `DeleteStudent_ExistingId`, `DeleteStudent_NonExistentId`
+
+New suggestions: `2026-11-05-versioni-ef-core-disallineate.md`, `2026-11-06-instructor-dateofbirth-format.md`, `2026-11-06-edit-edition-missing-existence-check.md`.

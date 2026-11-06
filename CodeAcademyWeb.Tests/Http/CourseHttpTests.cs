@@ -195,13 +195,14 @@ namespace CodeAcademyWeb.Tests.Http
 		{
 			// Arrange
 			ServiceCreatesWithId(1);
+			var today = DateTime.Today;
 
 			// Act
 			var response = await client.PostAsJsonAsync("/api/Course", CourseDTO(creationDate: null), TestContext.Current.CancellationToken);
 
 			// Assert
 			Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-			Assert.Equal(TestData.Today, (await ReadJson(response)).GetProperty("creationDate").GetString());
+			TestData.AssertIsToday(today, (await ReadJson(response)).GetProperty("creationDate").GetString());
 		}
 
 		[Fact] // Expected red: the creation date sent by the client is kept
@@ -209,13 +210,14 @@ namespace CodeAcademyWeb.Tests.Http
 		{
 			// Arrange
 			ServiceCreatesWithId(1);
+			var today = DateTime.Today;
 
 			// Act
 			var response = await client.PostAsJsonAsync("/api/Course", CourseDTO(creationDate: "2020-05-01"), TestContext.Current.CancellationToken);
 
 			// Assert
 			Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-			Assert.Equal(TestData.Today, (await ReadJson(response)).GetProperty("creationDate").GetString());
+			TestData.AssertIsToday(today, (await ReadJson(response)).GetProperty("creationDate").GetString());
 		}
 
 		[Fact] // Expected red: returns 201 Created

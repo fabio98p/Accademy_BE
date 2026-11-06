@@ -3,7 +3,7 @@
 - **Data**: 2026-11-05
 - **Progetto**: Accademy_BE
 - **Progetti correlati**: nessuno
-- **Stato**: In corso
+- **Stato**: Completed
 
 ## Obiettivo
 
@@ -153,13 +153,13 @@ Alternative scartate:
 
 ## Criteri di accettazione
 
-- [ ] Progetto di test nella soluzione, eseguibile senza DB
-- [ ] Ognuno dei 26 endpoint ha unit test e test HTTP
-- [ ] I test falliscono solo sui comportamenti `BROKEN` e sui DELETE con id inesistente
-- [ ] `docs/technical/` con README, architecture, decisions e un file per controller
-- [ ] README root con link alla documentazione tecnica
-- [ ] Codice delle API e Swagger invariati
-- [ ] Consigli nuovi registrati
+- [x] Progetto di test nella soluzione, eseguibile senza DB
+- [x] Ognuno dei 26 endpoint ha unit test e test HTTP
+- [x] I test falliscono solo sui comportamenti `BROKEN` e sui DELETE con id inesistente
+- [x] `docs/technical/` con README, architecture, decisions e un file per controller
+- [x] README root con link alla documentazione tecnica
+- [x] Codice delle API e Swagger invariati
+- [x] Consigli nuovi registrati
 
 ## Note di implementazione
 
@@ -178,3 +178,13 @@ Test run: 111 tests (55 Unit, 56 Http), 83 green, 28 red. The red tests are exac
 - Student: `UpdateStudent_ValidStudent`, `GetStudentById_NonExistentId`, `EnrollStudent_ValidData`, `DeleteStudent_ExistingId`, `DeleteStudent_NonExistentId`
 
 New suggestions: `2026-11-05-versioni-ef-core-disallineate.md`, `2026-11-06-instructor-dateofbirth-format.md`, `2026-11-06-edit-edition-missing-existence-check.md`.
+
+Code review (`/code-review`), fixes confirmed by the user:
+- JSON parsing in `Area`, `Instructor`, `Lesson` HTTP tests moved to `TestData.ParseJson`, which now disposes the `JsonDocument`.
+- `TestData.Today` replaced by `TestData.AssertIsToday`: today is read before the call and the following day is also accepted (midnight-safe).
+- `StudentControllerTests.EnrollStudent_ValidData_ReturnsCreatedWithEnrollment`: comment on how to update it when `IEnrollmentsService` is injected.
+- `- Position:` changed to `- Posizione:` in the two 2026-11-06 suggestions (template).
+
+Findings left as is: expected `Location` `/api/Enrollment/{id}` (user decision), `Edit_EditionNotFound` on an unreachable path (tracked in suggestions), red tests in the suite (plan decision), one `WebApplicationFactory` per HTTP test (isolation), missing `docs/functional` (excluded by the plan, gap still open).
+
+Resolved suggestions: none.

@@ -191,13 +191,14 @@ namespace CodeAcademyWeb.Tests.Controllers
 		{
 			// Arrange
 			ServiceCreatesWithId(1);
+			var today = DateTime.Today;
 
 			// Act
 			var result = controller.CreateCourse(CourseDTO(creationDate: null));
 
 			// Assert
 			var created = Assert.IsType<CreatedResult>(result);
-			Assert.Equal(TestData.Today, Assert.IsType<CourseDTO>(created.Value).CreationDate);
+			TestData.AssertIsToday(today, Assert.IsType<CourseDTO>(created.Value).CreationDate);
 		}
 
 		[Fact] // Expected red: the creation date sent by the client is kept
@@ -205,13 +206,14 @@ namespace CodeAcademyWeb.Tests.Controllers
 		{
 			// Arrange
 			ServiceCreatesWithId(1);
+			var today = DateTime.Today;
 
 			// Act
 			var result = controller.CreateCourse(CourseDTO(creationDate: "2020-05-01"));
 
 			// Assert
 			var created = Assert.IsType<CreatedResult>(result);
-			Assert.Equal(TestData.Today, Assert.IsType<CourseDTO>(created.Value).CreationDate);
+			TestData.AssertIsToday(today, Assert.IsType<CourseDTO>(created.Value).CreationDate);
 		}
 
 		[Fact] // Expected red: returns 201 Created

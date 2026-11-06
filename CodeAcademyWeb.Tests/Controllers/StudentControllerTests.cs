@@ -158,6 +158,10 @@ namespace CodeAcademyWeb.Tests.Controllers
 		[Fact] // Expected red: the enrollments service is never assigned (NullReferenceException)
 		public void EnrollStudent_ValidData_ReturnsCreatedWithEnrollment()
 		{
+			// When the bug is fixed (IEnrollmentsService injected in the constructor), update this test:
+			// build the controller with an IEnrollmentsService substitute and stub
+			// EnrollSudentToEdition to return TestData.Enrollment(), as in StudentHttpTests.
+
 			// Act
 			var result = controller.EnrollStudent(new EnrollDataDTO { IdStudent = 4, IdEdition = 5 }, 4);
 

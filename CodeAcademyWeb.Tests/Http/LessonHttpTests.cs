@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -44,8 +43,8 @@ namespace CodeAcademyWeb.Tests.Http
 
 			// Assert
 			Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-			var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken));
-			var lesson = Assert.Single(json.RootElement.EnumerateArray());
+			var json = TestData.ParseJson(await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken));
+			var lesson = Assert.Single(json.EnumerateArray());
 			Assert.Equal(1, lesson.GetProperty("id").GetInt64());
 			Assert.Equal("Introduction", lesson.GetProperty("subject").GetString());
 			Assert.Equal(7, lesson.GetProperty("courseEditionId").GetInt64());

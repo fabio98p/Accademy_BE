@@ -50,7 +50,7 @@
 
 ## Tests
 
-"Today" in the tests is `DateTime.Today` (`TestData.Today`).
+"Today" in the tests is the local `DateTime.Today`, read before the call. `TestData.AssertIsToday` also accepts the following day if the test runs across midnight.
 
 | Test | Level | Expected result |
 |------|-------|-----------------|

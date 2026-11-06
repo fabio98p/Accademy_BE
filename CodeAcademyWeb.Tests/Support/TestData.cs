@@ -3,14 +3,22 @@ using AcademyModel.Entities;
 using NodaTime;
 using System;
 using System.Text.Json;
+using Xunit;
 
 namespace CodeAcademyWeb.Tests.Support
 {
 	/// <summary>Sample entities shared by unit and HTTP tests.</summary>
 	public static class TestData
 	{
-		/// <summary>Today's date in the format used by the DTOs (yyyy-MM-dd).</summary>
-		public static string Today => DateTime.Today.ToString("yyyy-MM-dd");
+		/// <summary>
+		/// Asserts that <paramref name="actual"/> (yyyy-MM-dd) is today's date. <paramref name="dayBeforeAct"/> is
+		/// <see cref="DateTime.Today"/> read before the call: both days are accepted if the test runs across midnight.
+		/// </summary>
+		public static void AssertIsToday(DateTime dayBeforeAct, string actual)
+		{
+			var accepted = new[] { dayBeforeAct.ToString("yyyy-MM-dd"), DateTime.Today.ToString("yyyy-MM-dd") };
+			Assert.Contains(actual, accepted);
+		}
 
 		public static Area Area() => new Area { Id = 2, Name = "Development", Description = "Software development" };
 
@@ -77,6 +85,10 @@ namespace CodeAcademyWeb.Tests.Support
 		};
 
 		/// <summary>Parses the JSON body of an HTTP response.</summary>
-		public static JsonElement ParseJson(string body) => JsonDocument.Parse(body).RootElement;
+		public static JsonElement ParseJson(string body)
+		{
+			using var document = JsonDocument.Parse(body);
+			return document.RootElement.Clone();
+		}
 	}
 }

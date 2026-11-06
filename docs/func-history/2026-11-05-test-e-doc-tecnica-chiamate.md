@@ -88,7 +88,7 @@ Alternative scartate:
 - [ ] Eseguire `dotnet test` e annotare negli appunti del piano i test che falliscono, verificando che siano solo quelli attesi
 
 ### Fase 1: AreaController
-- [ ] `GET /api/Area/areas`: lista mappata su `AreaDTO`, lista vuota
+- [x] `GET /api/Area/areas`: lista mappata su `AreaDTO`, lista vuota
 
 ### Fase 2: InstructorController
 - [ ] `GET /api/Instructor`: lista mappata su `InstructorDTO`, lista vuota

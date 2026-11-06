@@ -94,7 +94,7 @@ Alternative scartate:
 - [x] `GET /api/Instructor`: lista mappata su `InstructorDTO`, lista vuota
 
 ### Fase 3: LessonController
-- [ ] `GET /api/Lesson/lessonByEdition/{id}`: id passato al servizio, mapping `LessonDTO`, lista vuota
+- [x] `GET /api/Lesson/lessonByEdition/{id}`: id passato al servizio, mapping `LessonDTO`, lista vuota
 
 ### Fase 4: EnrollmentController
 - [ ] `GET studentSubscribed/{id}`: mapping `EnrollmentDTO` (campi `CourseEdition*`, `CourseEditionStartDate`)

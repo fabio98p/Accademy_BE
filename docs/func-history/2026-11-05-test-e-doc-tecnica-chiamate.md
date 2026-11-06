@@ -91,7 +91,7 @@ Alternative scartate:
 - [x] `GET /api/Area/areas`: lista mappata su `AreaDTO`, lista vuota
 
 ### Fase 2: InstructorController
-- [ ] `GET /api/Instructor`: lista mappata su `InstructorDTO`, lista vuota
+- [x] `GET /api/Instructor`: lista mappata su `InstructorDTO`, lista vuota
 
 ### Fase 3: LessonController
 - [ ] `GET /api/Lesson/lessonByEdition/{id}`: id passato al servizio, mapping `LessonDTO`, lista vuota
